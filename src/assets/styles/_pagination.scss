@@ -1,0 +1,103 @@
+.pagination-wrap {
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 1000px) {
+        flex-wrap: wrap;
+    }
+    .pagination {
+        margin-bottom: 15px;
+        li {
+            button {
+                color: #263238;
+            }
+        }
+        li:first-child, li:last-child {
+            button {
+                color: #6A7279;
+            }
+        }
+        .MuiPaginationItem-page.Mui-selected {
+            background-color: #26A9CC;
+            color: #ffffff;
+        }
+    }
+}
+.pagination-select__wrap {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-bottom: 15px;
+    span {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15px;
+        text-align: right;
+        color: #263238;
+    }
+}
+.pagination-select {
+    margin-left: 18px !important;
+    position: relative !important;
+    input {
+        width: 95px;
+        padding: 11.5px 14px;
+        background: #F4F6F8 !important;
+        border: 1px solid #C1C5C9;
+        box-sizing: border-box;
+        border-radius: 14px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        color: #263238;
+        z-index: 77;
+    }
+    i {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        font-size: 15px;
+        color: #6A7279;
+        z-index: 4;
+    }
+    .MuiSelect-select {
+        padding: 5px 25px 5px 8px !important;
+        border-radius: 14px;
+        font-size: 12px;
+        line-height: 15px;
+        z-index: 7;
+    }
+    fieldset {
+        top: 0;
+        border-radius: 14px;
+        legend {
+            display: none;
+        }
+    }
+    .MuiOutlinedInput-root.Mui-focused {
+        .MuiOutlinedInput-notchedOutline {
+            border-color: #26A9CC;
+            border-width: 1px;
+        }
+        .MuiSelect-select {
+            background: transparent;
+        }
+    }
+
+    &.pagination-select-gray {
+        .MuiSelect-root {
+            background: #F4F6F8;
+        }
+        .MuiOutlinedInput-notchedOutline {
+            border-color: transparent;
+            border-width: 1px;
+            background: #F4F6F8;
+        }
+        .MuiSelect-select {
+            background: transparent;
+        }
+        .MuiInputBase-root:hover fieldset {
+            border-color: transparent !important;
+        }
+    }
+
+}

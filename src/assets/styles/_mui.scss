@@ -1,0 +1,93 @@
+
+.MuiPickersBasePicker-container {
+    .MuiPickersDay-daySelected {
+        background: #65C14B;
+    }
+    .MuiPickersDay-daySelected:hover {
+        background-color: darken(#65C14B, 10%) !important;
+    }
+}
+
+.MuiButton-textPrimary {
+    display: none !important;
+    .MuiButton-label {
+        color: #222222;
+    }
+}
+
+.MuiPickersDay-current {
+    color: #25b800;
+    font-weight: 600;
+}
+
+.MuiAutocomplete-popper {
+    max-height: 50px !important;
+}
+
+.MuiAppBar-positionStatic {
+    position: relative !important;
+    z-index: 1 !important;
+    transform: inherit !important;
+}
+
+.MuiTabs-indicator {
+    display: none;
+}
+
+.MuiCircularProgress-colorPrimary {
+    color: #26A9CC !important;
+}
+.MuiInputBase-root {
+    &:hover {
+        fieldset {
+            border-color: #26A9CC !important;
+        }
+    }
+}
+
+.MuiSlider-root {
+    color: #26A9CC !important;
+}
+.MuiList-root {
+    .MuiListSubheader-root {
+        width: 100%;
+        border-top: 1px solid #E2E5E8;
+    }
+    .MuiListItem-root:hover {
+        background-color: transparent !important;
+        color: #26A9CC !important;
+    }
+    .Mui-selected.MuiListItem-root {
+        background-color: transparent !important;
+        color: #26A9CC !important;
+    }
+    .MuiListItem-root {
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.0428571px;
+        color: #263238;
+    }
+}
+.MuiAutocomplete-root:not(.Mui-focused) {
+    .MuiCircularProgress-root {
+        display: none !important;
+    }
+}
+.MuiAutocomplete-root.Mui-focused {
+    .MuiCircularProgress-root {
+        color: #26A9CC !important;
+    }
+}
+
+.MuiAutocomplete-option {
+    &:hover {
+        color: #26A9CC;
+    }
+}
+/*.MuiAutocomplete-listbox {
+    max-height: 250px;
+}*/
+/*.MuiAutocomplete-paper {
+    max-height: 200px;
+    overflow-y: scroll;
+}*/

@@ -1,0 +1,75 @@
+.filterBlock {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    @media screen and (max-width:1000px) {
+        flex-wrap: wrap;
+    }
+    .btn {
+        margin-bottom: 18px;
+    }
+}
+.projectTable {
+    .projectColumn {
+        width: 560px;
+    }
+    .clientColumn {
+        width: 200px;
+    }
+    .status {
+        display: inline-block;
+        padding: 2px 3px;
+        font-weight: bold;
+        font-size: 7px;
+        line-height: 9px;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+    .stat1 {
+        color: #65C14B;
+        border: 1px solid #65C14B;
+    }
+    .stat2 {
+        color: #26A9CC;
+        border: 1px solid #26A9CC;
+    }
+    .stat3 {
+        color: #cc8b00;
+        border: 1px solid #cc8b00;
+    }
+    .stat4 {
+        color: #cc000a;
+        border: 1px solid #cc000a;
+    }
+    .stat5 {
+        color: #c8cc00;
+        border: 1px solid #C8CC00;
+    }
+    .stat6 {
+        color: #cc007e;
+        border: 1px solid #cc007e;
+    }
+    .stat7 {
+        color: #0004cc;
+        border: 1px solid #0004cc;
+    }
+    .stat-1 {
+        color: #3ecc00;
+        border: 1px solid #3ecc00;
+    }
+    .stat-2 {
+        color: #cc3f00;
+        border: 1px solid #cc3f00;
+    }
+    @media screen and (max-width: 1000px){
+        .projectColumn {
+            width: 350px;
+        }
+    }
+    @media screen and (max-width: 540px){
+        .projectColumn {
+            width: 250px;
+        }
+    }
+}

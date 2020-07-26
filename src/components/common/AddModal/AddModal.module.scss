@@ -1,0 +1,103 @@
+.addModal {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 999;
+   background: rgba(0,0,0, 0.3);
+   .withIcon {
+      position: relative;
+      input {
+         padding-right: 35px;
+      }
+      i {
+         position: absolute;
+         right: 10px;
+         top: 35px;
+         font-size: 25px;
+         color: #6A7279;
+      }
+   }
+   .divider {
+      margin: 15px 0 15px -25%;
+      width: 150%;
+   }
+   .addModalWrap {
+      position: relative;
+      width: 670px;
+      background: #ffffff;
+      padding: 18px 25px;
+      border-radius: 4px;
+      overflow: hidden;
+      .input {
+         width: 100%;
+         background: #F4F6F8;
+         box-sizing: border-box;
+         border-radius: 4px;
+         color: #263238;
+      }
+      .cancelBtn {
+         background: #F4F6F8;
+         border: 0;
+         box-shadow: 0 1px 5px rgba(244, 246, 248, 0.3);
+         border-radius: 12px;
+         font-weight: bold;
+         font-size: 14px;
+         padding: 10px 16px;
+         line-height: 17px;
+         color: #263238;
+         margin-right: 18px;
+         cursor: pointer;
+         outline: none;
+         @media screen and (min-width: 1000px){
+            &:hover {
+               background: darken(#F4F6F8, 5%);
+            }
+         }
+      }
+   }
+   .addModalHeader {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      span {
+         display: inline-block;
+         margin-left: 10px;
+         font-weight: 700;
+         font-size: 16px;
+         line-height: 20px;
+         letter-spacing: -0.05px;
+         color: #263238;
+         margin-bottom: 0;
+
+      }
+   }
+   @media screen and (max-width: 760px) {
+      overflow: scroll;
+      align-items: flex-start;
+      .addModalWrap {
+         width: 500px;
+         min-width: auto;
+         max-width: none;
+         background: #ffffff;
+         padding: 18px 10px;
+
+         .input {
+            width: 100%;
+            background: #F4F6F8;
+            box-sizing: border-box;
+            border-radius: 4px;
+            color: #263238;
+         }
+      }
+   }
+   @media screen and (max-width: 520px) {
+      .addModalWrap {
+         width: 100%;
+      }
+   }
+}

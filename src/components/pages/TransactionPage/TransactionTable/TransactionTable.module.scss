@@ -1,0 +1,22 @@
+.filterBlock {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .btn {
+        margin-bottom: 18px;
+    }
+}
+
+.budget {
+    width: 250px;
+    text-align: right !important;
+    @media screen and (min-width: 1000px) {
+        padding-right: 100px !important;
+    }
+}
+/*.typeColumn {
+    width: 150px;
+}
+.date {
+    width: 100px;
+}*/

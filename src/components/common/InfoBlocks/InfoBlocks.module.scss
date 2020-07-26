@@ -1,0 +1,60 @@
+.infoBlocks {
+    .item {
+        background: #ffffff;
+        border-radius: 4px;
+        .itemTop {
+            display: flex;
+            border-bottom: 1px solid #E2E5E8;
+            padding: 15px 20px;
+            position: relative;
+            .pagination {
+                position: absolute !important;
+                right: 20px;
+                top: 15px;
+            }
+            span {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 22px;
+                color: #6A7279;
+            }
+        }
+        .itemBottom {
+            position: relative;
+            padding: 23px 20px 23px 58px;
+            .circle {
+                display: inline-block;
+                position: absolute;
+                left: 20px;
+                top: 35px;
+                width: 18px;
+                height: 18px;
+                border: 5px solid black;
+                border-radius: 50%;
+                &.circleBlue {
+                    border: 5px solid #0066FF;
+                }
+                &.circleGreen {
+                    border: 5px solid #00C999;
+                }
+                &.circleRed {
+                    border: 5px solid #E72B63;
+                }
+                &.circleOrange {
+                    border: 5px solid #FFA05B;
+                }
+            }
+            .amount {
+                font-size: 32px;
+                line-height: 40px;
+                letter-spacing: -0.24px;
+                color: #263238;
+                display: inline-block;
+                .ruble {
+                    font-family: sans-serif !important;
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,184 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 64px;
+    width: 240px;
+    height: 100vh;
+    overflow: hidden;
+    padding: 0 18px;
+    background: #ffffff;
+    z-index: 88;
+    a {
+        display: inline-block;
+        text-decoration: none;
+    }
+    .divider {
+        margin-bottom: 20px;
+    }
+    .sidebarNav {
+        margin-top: 20px;
+        .links {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-left: 35px;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 17px;
+            color: #263238;
+            transition: .2s linear;
+            margin-bottom: 25px;
+            cursor: pointer;
+            @media screen and (min-width: 1000px) {
+                &:hover {
+                    color: #26A9CC;
+                }
+            }
+            i {
+                position: absolute;
+                left: 0;
+                top: 1px;
+                font-size: 16px;
+                color: #26A9CC;
+            }
+        }
+        .linksGray {
+            color: #6A7279;
+            i {
+                color: #C1C5C9;
+            }
+        }
+    }
+    .sidebarUser {
+        position: relative;
+        .sidebarUserDivider {
+            margin-top: 20px;
+        }
+        .sidebarUserAvatar {
+            width: 70px;
+            height: 70px;
+            margin: 24px auto 13px;
+        }
+        .sidebarUserName {
+            position: relative;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 20px;
+            text-align: center;
+            letter-spacing: -0.05px;
+            color: #263238;
+            cursor: pointer;
+            @media screen and (min-width: 1000px){
+                &:not(.sidebarUserNameOpen) {
+                    &:hover {
+                        .userName, i {
+                            color: #65C14B;
+                        }
+                    }
+                }
+            }
+            i {
+                display: inline-block;
+                margin-left: 5px;
+                line-height: 1;
+            }
+            .userName + i {
+                &:before {
+                    position: absolute;
+                    top: 4px;
+                }
+            }
+        }
+        .sidebarUserMenu {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            padding-top: 5px;
+            background: #FFFFFF;
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.19);
+            border-radius: 6px;
+            z-index: 99;
+            .sidebarUserMenuLink {
+                display: inline-block;
+                position: relative;
+                width: 100%;
+                margin-bottom: 5px;
+                padding: 14px 14px 14px 54px;
+                color: #263238;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 17px;
+                text-align: left;
+                &:not(:last-child) {
+                    border-bottom: 1px solid #E2E5E8;
+                }
+                @media screen and (min-width: 1000px) {
+                    &:hover {
+                        color: #26A9CC;
+                    }
+                }
+                i {
+                    position: absolute;
+                    left: 14px;
+                    top: 15px;
+                    font-size: 16px;
+                    color: #C1C5C9;
+                }
+            }
+        }
+    }
+    .sidebarUserNameOpen {
+        .userName {
+            color: #26A9CC;
+        }
+
+    }
+
+    @media screen and (max-width:1000px){
+        position: fixed;
+        top: 64px;
+        left: 0;
+        transform: translateX(-100%);
+        width: 240px;
+        background: #ffffff;
+        z-index: 88;
+        transition: .3s ease;
+        overflow: scroll;
+        .burgerBtn {
+            display: block;
+        }
+        &.sidebarShow {
+            transform: translateX(0);
+        }
+        .sidebarUser {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .sidebarUserAvatar {
+                width: 40px;
+                height: 40px;
+                margin: 24px 10px 24px 0;
+            }
+            .sidebarUserName {
+                font-size: 13px;
+            }
+            .sidebarUserMenu {
+                .sidebarUserMenuLink {
+                    padding: 14px 14px 14px 34px;
+                    i {
+                        position: absolute;
+                        left: 4px;
+                        top: 15px;
+                        font-size: 16px;
+                        color: #C1C5C9;
+                    }
+                }
+            }
+        }
+    }
+    @media screen and (max-width:760px){
+    }
+    @media screen and (max-width:540px){
+        width: 100%;
+    }
+}

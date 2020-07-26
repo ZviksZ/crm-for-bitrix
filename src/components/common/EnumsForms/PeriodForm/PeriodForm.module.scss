@@ -1,0 +1,94 @@
+.periodForm {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+    margin-bottom: 15px;
+    .periodSelect {
+        margin-left: 10px;
+    }
+    .withIcon {
+        display: inline-block;
+        position: relative;
+        .MuiInputBase-root {
+            z-index: 6;
+        }
+        input {
+            padding-right: 25px;
+            z-index: 77;
+            background: transparent;
+            cursor: pointer;
+        }
+        i {
+            position: absolute;
+            right: 8px;
+            top: 6px;
+            font-size: 15px;
+            color: #6A7279;
+            z-index: 4;
+        }
+    }
+    .text {
+        display: inline-block;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        color: #263238;
+    }
+    .defis {
+        display: inline-block;
+        width: 7px;
+        height: 1px;
+        background: #C1C5C9;
+        margin: 0 5px;
+    }
+    form {
+        width: auto;
+        display: flex;
+        align-items: center;
+    }
+    input {
+        width: 95px;
+        padding: 11.5px 14px;
+        background: #F4F6F8;
+        border: 1px solid #C1C5C9;
+        box-sizing: border-box;
+        border-radius: 14px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        color: #263238;
+    }
+    i {
+        font-size: 17px;
+    }
+
+    @media screen and (max-width:760px){
+        span {
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        input {
+            width: 95px;
+            background: #F4F6F8;
+            border: 1px solid #C1C5C9;
+            box-sizing: border-box;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 15px;
+            color: #263238;
+        }
+    }
+
+    @media screen and (max-width:421px){
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        span {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+    }
+
+}

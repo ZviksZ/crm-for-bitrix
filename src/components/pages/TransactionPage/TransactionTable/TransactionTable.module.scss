@@ -10,13 +10,8 @@
 .budget {
     width: 250px;
     text-align: right !important;
+    white-space: nowrap;
     @media screen and (min-width: 1000px) {
         padding-right: 100px !important;
     }
 }
-/*.typeColumn {
-    width: 150px;
-}
-.date {
-    width: 100px;
-}*/

@@ -1,4 +1,5 @@
-import * as axios from "axios";
+import * as axios                              from "axios";
+import {awardsData, membersData, projectsData} from "./mockUp.js";
 
 const instance = axios.create({
    baseURL: 'https://margin.internetlab.ru/api',
@@ -209,4 +210,31 @@ export const authAPI = {
    login(formData) {
       return instance.post(`/login`, formData).then(response => response.data);
    }
+}
+
+
+export const projectsAPI = {
+   /**
+    * Данные по проектам, распределенные по клиентам
+    */
+   getProjectsData(formData) {
+      //return projectsData
+      return instance.post(`/reportProject`,formData).then(response => response.data);
+   },
+}
+export const membersAPI = {
+   /**
+    * Данные по сотрудникам(проекты, время)
+    */
+   getMembersData(formData) {
+      //return membersData
+      return instance.post(`/reportStaff`,formData).then(response => response.data);
+   },
+   /**
+    * Данные по премиям
+    */
+   getAwardsData(formData) {
+      //return awardsData
+      return instance.post(`/reportAward`,formData).then(response => response.data);
+   },
 }

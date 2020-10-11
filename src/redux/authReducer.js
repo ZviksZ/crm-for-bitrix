@@ -33,7 +33,9 @@ const authReducer = (state = initialState, action) => {
 export const setUserData = (payload) => ({type: SET_USER_DATA, payload})
 const setAuth = (isAuth) => ({type: SET_AUTH, isAuth})
 
-
+/**
+ * Вход в систему
+ */
 export const login = (login, password) => async (dispatch) => {
    const formData = setFormData({login, password})
    dispatch(setLoading(true))
@@ -58,12 +60,17 @@ export const login = (login, password) => async (dispatch) => {
    }
 
 };
+/**
+ * Выход из системы
+ */
 export const logoutUser = () => async (dispatch) => {
    dispatch(setAuth(false))
    dispatch(setUserData({token: '',userId: '',name: '',img: ''}))
    Cookie.deleteCookie('userData');
 };
-
+/**
+ * Проверка, если в куках сохранен пользователь, то войти в систему
+ */
 export const cookieUser = () => async (dispatch) => {
    try {
       const cookies = Cookie.getCookie('userData');

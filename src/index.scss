@@ -48,6 +48,10 @@ body {
   &::-webkit-scrollbar { width: 0; }
   & { -ms-overflow-style: none; }
   & { overflow: -moz-scrollbars-none; }
+  .custom-loader {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 

@@ -1,6 +1,3 @@
-import {enumsAPI}       from "../api/api.js";
-import {formatDate}     from "../helpers/utils.js";
-
 const SET_TOP_IN_FILTER = 'marginlab/main/SET_TOP_IN_FILTER';
 const SET_TOP_OUT_FILTER = 'marginlab/main/SET_TOP_OUT_FILTER';
 
@@ -51,6 +48,10 @@ export const setTopOutFilter = (start, finish) => ({
    payload: {start, finish}
 })
 
+
+/**
+ * Фильтр по дате на главной странице(верхние блоки)
+ */
 export const setTopInOutFilter = (start, finish, isIn = false) => async (dispatch) => {
 
    if(isIn) {

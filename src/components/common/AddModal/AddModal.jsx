@@ -10,26 +10,41 @@ import {DatePicker, MuiPickersUtilsProvider}                                    
 import ruLocale                                                                      from "date-fns/locale/ru";
 import React, {useEffect, useState}                                                  from 'react';
 import {useForm}                                                                     from "react-hook-form";
-import {connect}                                                                     from "react-redux";
-import {NumberFormatCustom}                                                          from "../../../helpers/formFields.jsx";
-import {sortExpenseEnum}                                                             from "../../../helpers/utils.js";
-import {addModalSchema}                                                              from "../../../helpers/validationShemas.js";
-import {addTransaction, closeAddModalWithData, deleteTransaction, updateTransaction} from "../../../redux/appReducer.js";
-import {updateContractorEnum, updateProjects}                                        from "../../../redux/thunk/enumsThunks.js";
-import {OutsideAlerter}                                                              from "../../hoc/OutsideAlerter.jsx";
-import styles                                                                        from './AddModal.module.scss';
+import {connect}                                                                                            from "react-redux";
+import * as yup                                                                                             from "yup";
+import {NumberFormatCustom}                                                                                 from "../../../helpers/formFields.jsx";
+import {sortExpenseEnum}                                                        from "../../../helpers/utils.js";
+import {addTransaction, closeAddModalWithData, deleteTransaction, updateTransaction}                        from "../../../redux/appReducer.js";
+import {updateContractorEnum, updateProjects}                                                               from "../../../redux/thunk/enumsThunks.js";
+import {OutsideAlerter}                                                                                     from "../../hoc/OutsideAlerter.jsx";
+import styles                                                                                               from './AddModal.module.scss';
 import {AddModalHeader}                                                              from "./AddModalHeader.jsx";
+
 
 const AddModal = ({
                      deleteTransaction, addModalIsOpen,
                      addModalData, updateContractorEnum,
                      closeAddModalWithData, enums,
-                     updateTransaction, addTransaction, updateProjects, creditAdditional
+                     updateTransaction, addTransaction, updateProjects, creditAdditional, transFilter
                   }) => {
 
-   const {register, handleSubmit, setValue, errors} = useForm({
-      validationSchema: addModalSchema
+   const addModalSchemaType = yup.object().shape({
+      date: yup.string().required('Обязательное поле'),
+      amount: yup.string().required('Обязательное поле'),
+      ...(addModalData.type === '2' && {consider:  yup.string().required('Обязательное поле')}),
+      ...(addModalData.type === '1' && {cost_item:  yup.string().required('Обязательное поле')}),
+      ...(addModalData.type === '2' && {cost_item:  yup.string().required('Обязательное поле')}),
+      ...(addModalData.type !== '2' && {bank_account_in:  yup.string().required('Обязательное поле')}),
+      ...(addModalData.type !== '1' && {bank_account_out:  yup.string().required('Обязательное поле')}),
+
    });
+
+   const {register, handleSubmit, setValue, errors} = useForm({
+      validationSchema: addModalSchemaType
+   });
+
+   useEffect(() => {
+   }, [errors])
 
    let expenseList = []
 
@@ -96,6 +111,7 @@ const AddModal = ({
          default:
             break
       }
+
       if (addModalData.apiMethod === 'addTransaction') {
          addTransaction(newData)
       } else if (addModalData.apiMethod === 'updateTransaction') {
@@ -183,6 +199,8 @@ const AddModal = ({
                            margin="normal"
                            variant="outlined"
                            defaultValue={addModalData?.editData?.amount || ''}
+                           error={!!errors.amount}
+                           helperText={errors.amount ? errors.amount.message : ''}
                            InputProps={{
                               inputComponent: NumberFormatCustom,
                            }}
@@ -219,12 +237,13 @@ const AddModal = ({
                                  let entity = enums.contractorEnum.find(a => a.id === option.entity)?.title || ''
                                  let currency = creditAdditional.currency.find(a => a.id == option.currency)?.title || ''
 
+
                                  return <>
                                     <div className="creditListItem">
                                        <div className="creditListItemTitle">{option.title}</div>
                                        <div className="creditListItemSubitle">
-                                          <span>{entity}</span>
-                                          <span>{currency}</span>
+                                          {entity.length > 0 && <span>{entity}</span>}
+                                          <span className={entity.length === 0 ? 'no-point' : ''}>{currency}</span>
                                        </div>
                                     </div>
                                  </>
@@ -591,7 +610,7 @@ const AddModal = ({
                         addModalData.type === '1' && <Grid item xs={12} sm={12}>
                            <Autocomplete
                               options={enums.documentEnum}
-                              getOptionLabel={option => option.title || addModalData?.defaultValues?.documentTitle}
+                              getOptionLabel={option => option.title || addModalData?.defaultValues?.documentTitle || ''}
                               onChange={(e, data) => {
                                  setDocument(data?.id || null)
                                  setValue("document", data ? data : '');
@@ -701,7 +720,8 @@ let mapStateToProps = (state) => {
       addModalIsOpen: state.common.addModalIsOpen,
       enums: state.enum.enums,
       addModalData: state.common.addModalData,
-      creditAdditional: state.enum.creditAdditional
+      creditAdditional: state.enum.creditAdditional,
+      transFilter: state.enum.transFilter
    }
 }
 

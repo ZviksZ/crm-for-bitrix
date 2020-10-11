@@ -11,6 +11,8 @@ export const ProjectTableItem = ({item, projectStatuses, openProjectMemberForm, 
       finish = formatDate(item.finish);
    }
    const [client, setClient] = useState(item.client)
+   const [period, setPeriod] = useState('')
+
    /*let clientItem = groupEnum.find(i => i.id == item.client)
    let client = clientItem?.title || item.client*/
 
@@ -23,6 +25,16 @@ export const ProjectTableItem = ({item, projectStatuses, openProjectMemberForm, 
       } else {
          setClient('Не указан')
          //getGroupInfo(item.client).then(res => setClient(res?.data?.title || item.client))
+      }
+
+
+
+      let periodItem = [{id: 1, title: 'Разовый'}, {id: 2, title: 'Ежемесячный'}].find(i => i.id === item.period)
+
+      if (periodItem) {
+         setPeriod(periodItem?.title)
+      } else {
+         setPeriod('-')
       }
 
    }, [item, setClient])
@@ -40,6 +52,9 @@ export const ProjectTableItem = ({item, projectStatuses, openProjectMemberForm, 
          <td className="budget" >
 
             {budget} &#8381;
+         </td>
+         <td>
+            {period}
          </td>
          <td className="hoverText hoverTextBig">
             <span><i className="icon-baseline-edit-24px-default"></i> Изменить бюджет</span>

@@ -5,9 +5,12 @@ import {GlobalMessage}           from "./components/common/GlobalMessage/GlobalM
 import Navbar                    from "./components/common/Navbar/Navbar.jsx";
 import Sidebar                   from "./components/common/Sidebar/Sidebar.jsx";
 import {AuthPage}                from "./components/pages/AuthPage/AuthPage.jsx";
+import {AwardsPage}              from "./components/pages/AwardsPage/AwardsPage.jsx";
 import {DemoPage}                from "./components/pages/DemoPage/DemoPage.jsx";
 import {EnumsPage}               from "./components/pages/EnumsPage/EnumsPage.jsx";
 import {MainPage}                from "./components/pages/MainPage/MainPage.jsx";
+import {MembersPage}             from "./components/pages/MembersPage/MembersPage.jsx";
+import {ProjectsPage}            from "./components/pages/ProjectsPage/ProjectsPage.jsx";
 import {TransactionPage}         from "./components/pages/TransactionPage/TransactionPage.jsx";
 
 export const useRoutes = (isAuthenticated = false) => {
@@ -18,7 +21,6 @@ export const useRoutes = (isAuthenticated = false) => {
             <AddModal/>
             <GlobalMessage />
             <div className="main__wrapper">
-
                <Sidebar/>
                <div className="main__content">
                   <Switch>
@@ -32,35 +34,18 @@ export const useRoutes = (isAuthenticated = false) => {
                         <TransactionPage/>
                      </Route>
                      <Route path="/projects">
-                        <div>Projects</div>
+                        <ProjectsPage />
                      </Route>
                      <Route path="/members">
-                        <div>members</div>
-                     </Route>
-                     <Route path="/tasks">
-                        <div>tasks</div>
+                        <MembersPage />
                      </Route>
                      <Route path="/enums">
                         <EnumsPage/>
                      </Route>
-                     <Route path="/sales">
-                        <div>sales</div>
+                     <Route path="/awards">
+                        <AwardsPage/>
                      </Route>
-                     <Route path="/support">
-                        <div>support</div>
-                     </Route>
-                     <Route path="/documents">
-                        <div>documents</div>
-                     </Route>
-                     <Route path="/profile">
-                        <div>profile</div>
-                     </Route>
-                     <Route path="/settings">
-                        <div>settings</div>
-                     </Route>
-                     <Route path="/account">
-                        <div>account</div>
-                     </Route>
+
                      <Route path="/"
                             render={() => <Redirect to='/'/>}/>
                   </Switch>

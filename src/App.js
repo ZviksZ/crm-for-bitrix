@@ -22,9 +22,11 @@ const theme = createMuiTheme({
 
 export const App = () => {
    const {isLoading, isAuth} = useSelector(state => ({
-      isLoading: state.common.isLoading,
-      isAuth: state.auth.isAuth
+      isAuth: state.auth.isAuth,
+      isLoading: state.common.isLoading
    }))
+
+
    const dispatch = useDispatch()
    const routes = useRoutes(isAuth);
 

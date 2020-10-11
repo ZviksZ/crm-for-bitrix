@@ -45,7 +45,7 @@ export const EnumsPage = () => {
 
          <AppBar position="static" className={styles.tabWrap}>
             <Tabs value={value} onChange={handleChange} aria-label="simple tabs" className="tabs">
-               <Tab label="проекты" {...tabsProps(0)} className={styles.tab}/>
+               <Tab label="бюджеты" {...tabsProps(0)} className={styles.tab}/>
                <Tab label="сотрудники" {...tabsProps(1)} className={styles.tab}/>
                <Tab label="счета" {...tabsProps(2)} className={styles.tab}/>
                <Tab label="статьи" {...tabsProps(3)} className={styles.tab}/>

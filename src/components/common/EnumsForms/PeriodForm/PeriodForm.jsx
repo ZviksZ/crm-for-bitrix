@@ -21,13 +21,13 @@ export const PeriodForm = ({setFilter, filter, defPeriod}) => {
    const handleDateChangeFrom = (date) => {
       setDateFrom(date)
       if (date < dateTo) {
-         setFilter({...filter, page: 1,start: formatDate(date, true), finish: formatDate(dateTo, true)})
+         setFilter({...filter, page: 1,start: formatDate(date, true), finish: formatDate(dateTo, true)}, true)
       }
    };
    const handleDateChangeTo = (date) => {
       setDateTo(date)
       if (dateFrom < date) {
-         setFilter({...filter, start: formatDate(dateFrom, true), finish: formatDate(date, true)})
+         setFilter({...filter, start: formatDate(dateFrom, true), finish: formatDate(date, true)}, true)
       }
       setDateTo(date)
    };
@@ -40,7 +40,7 @@ export const PeriodForm = ({setFilter, filter, defPeriod}) => {
          showCustomPeriod(false);
          let {dateFrom, dateTo} = getDatePeriod(event.target.value);
 
-         setFilter({...filter, start: dateFrom, finish: dateTo})
+         setFilter({...filter, start: dateFrom, finish: dateTo}, true)
       }
 
    };

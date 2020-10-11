@@ -10,21 +10,15 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
       bankOutName: '',
       costItemName: '',
       considerTitle: '',
-      considerIdTitle: '',
+      considerIdTitle: item.projectName || '',
       documentTitle: '',
-      contractor: ''
+      contractor: item.contractorName || ''
+
    }
    const [itemTitle, setItemTitle] = useState('')
 
    defValues.considerTitle = item.consider === 0 ? 'не учитывать' : item.consider === 1 ? 'везде' : item.consider === 2 ? 'в выбранном проекте' : ''
 
-   if (item?.consider_id) {
-      enums.allProjects.data.forEach(val => {
-         if (val.id == item.consider_id) {
-            defValues.considerIdTitle = val.title
-         }
-      })
-   }
    if (item?.document) {
       enums.documentEnum.map(val => {
          if (val.id == item.document) {
@@ -52,14 +46,6 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
    useCallback(() => {
       defValues.considerTitle = item.consider === 0 ? 'не учитывать' : item.consider === 1 ? 'везде' : item.consider === 2 ? 'в выбранном проекте' : ''
 
-      if (item?.consider_id) {
-         enums.allProjects.data.forEach(val => {
-            if (val.id == item.consider_id) {
-               console.log(val)
-               defValues.considerIdTitle = val.title
-            }
-         })
-      }
       if (item?.document) {
          enums.documentEnum.map(val => {
             if (val.id == item.document) {
@@ -87,15 +73,18 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
    }, [item, defValues, enums.allProjects])
 
    useEffect(() => {
+      if (item.contractorName) {
+         setItemTitle(item.contractorName)
+      } else {
+         if (item?.contragent) {
+            let value = enums.contractorEnum.find(i => i.id == item.contragent)
 
-      if (item?.contragent) {
-         let value = enums.contractorEnum.find(i => i.id == item.contragent)
-
-         if (value) {
-            setItemTitle(value.title)
-         } else {
-            if (item.contragent !== 0) {
-               updateContractorName(item.contragent).then(res => setItemTitle(res?.data?.title || ''))
+            if (value) {
+               setItemTitle(value.title)
+            } else {
+               if (item.contragent !== 0) {
+                  updateContractorName(item.contragent).then(res => setItemTitle(res?.data?.title || ''))
+               }
             }
          }
       }
@@ -117,6 +106,15 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
          </td>
          <td className={styles.budget}>
             {amount} &#8381;
+         </td>
+         <td>
+            RUB
+         </td>
+         <td>
+            {defValues.considerIdTitle}
+         </td>
+         <td>
+            {itemTitle}
          </td>
          <td>
             {item.comment}

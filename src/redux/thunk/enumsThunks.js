@@ -1,7 +1,8 @@
 /* Thunks, functions */
 import {enumsAPI}                                                from "../../api/api.js";
+import {getDatePeriod}                                           from "../../helpers/getDatePeriod.js";
 import {addObjectToArray, formatDate, getArrayOfId, setFormData} from "../../helpers/utils.js";
-import {getGlobalError, setLoading}                              from "../appReducer.js";
+import {getGlobalError, setEnumsLoaded, setLoading}              from "../appReducer.js";
 import {
    addCredit, addExpense, additionalProjectPages, additionalTransPages, queryContactor,
    setAllProjects,
@@ -14,7 +15,9 @@ import {
    setProjectStatuses,
    setProjectsToForm, setTransFilter, updateMembersEnum, updateProjectEnum, updateTransEnum
 }                                                                from "../enumsReducer.js";
-
+/**
+ * Получение справочников битрикса
+ */
 export const getBitrixEnums = () => async (dispatch) => {
    try {
       await Promise.all([
@@ -30,12 +33,16 @@ export const getBitrixEnums = () => async (dispatch) => {
       dispatch(setBitrixEnums())
    }
 }
+/**
+ * Получение всех необходимых справочников при загрузке приложения
+ */
 export const getAppEnums = () => async (dispatch) => {
    dispatch(setLoading(true))
    let projFormData = setFormData({
       start: formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1), true),
       finish: formatDate(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), true),
-      status: [1, 2, 3]
+      status: [1, 2, 3],
+      period: [1, 2]
    })
    Promise.all([
       enumsAPI.getCreditAccountEnum(),
@@ -60,24 +67,31 @@ export const getAppEnums = () => async (dispatch) => {
       dispatch(setCreditAdditional(addObjectToArray(res[5]), addObjectToArray(res[6]), addObjectToArray(res[7])))
       dispatch(setCreditAdditionalBasic(res[5], res[6], res[7]))
       //dispatch(setImportStaff(res[10]))
-   }).then(() => dispatch(setLoading(false))).catch((e) => {
+   }).then(() => {
+      dispatch(setLoading(false))
+      dispatch(setEnumsLoaded(true))
+   }).catch((e) => {
       dispatch(getGlobalError('Загрузка одного или нескольких справочников не удалась', 'error'))
       dispatch(setLoading(false))
    })
 }
+/**
+ * Получить все проекты
+ */
 export const getAllProjects = (startProjects) => async (dispatch) => {
    dispatch(setAllProjects(startProjects))
    const pageNum = Math.ceil(startProjects.size / 50);
 
    if (pageNum >= 2) {
       for (let i = 2; i <= pageNum; i++) {
+         let {dateFrom, dateTo} = getDatePeriod(8);
          let formData = setFormData({
             client: null,
             status: null,
             budgetMin: null,
             budgetMax: null,
-            start: null,
-            finish: null,
+            start: dateFrom,
+            finish: dateTo,
             page: +i
          })
          let payload = await enumsAPI.getProjectsEnum(formData)
@@ -86,6 +100,9 @@ export const getAllProjects = (startProjects) => async (dispatch) => {
       }
    }
 }
+/**
+ * Обновить справочник проектов
+ */
 export const updateProjects = query => async (dispatch) => {
    try {
       const formData = setFormData({query})
@@ -98,7 +115,9 @@ export const updateProjects = query => async (dispatch) => {
 
    }
 }
-
+/**
+ * Изменение бюджета проекта
+ */
 export const changeBudget = (projectId, newBudget) => async (dispatch) => {
    let {date, budget, comment, author} = newBudget
    budget = budget.replace(/\s+/g, '');
@@ -116,6 +135,9 @@ export const changeBudget = (projectId, newBudget) => async (dispatch) => {
       dispatch(getGlobalError('Бюджет не изменен', 'error'))
    }
 }
+/**
+ * Изменение ставки сотрудника
+ */
 export const changeMemberPrice = (memberId, newBudget) => async (dispatch) => {
    let {date, budget, comment, author} = newBudget
    budget = budget.replace(/\s+/g, '');
@@ -129,7 +151,9 @@ export const changeMemberPrice = (memberId, newBudget) => async (dispatch) => {
       dispatch(getGlobalError('Ставка не изменена', 'error'))
    }
 }
-
+/**
+ * Обновить счет
+ */
 export const updateCreditItem = (data) => async (dispatch) => {
    try {
       let {title, entity, type, currency, balance, status, id, comment} = data;
@@ -144,6 +168,9 @@ export const updateCreditItem = (data) => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Добавить счет
+ */
 export const addCreditItem = (data) => async (dispatch) => {
    let {title, entity, type, status, currency, balance,comment} = data;
 
@@ -159,6 +186,9 @@ export const addCreditItem = (data) => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Удалить счет
+ */
 export const deleteCreditItem = id => async (dispatch) => {
    const formData = setFormData({id})
    try {
@@ -170,6 +200,9 @@ export const deleteCreditItem = id => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Получение своих юр.лиц
+ */
 export const getMyContractorEnum = () => async (dispatch) => {
    const formData = setFormData({my: 1})
    try {
@@ -179,7 +212,9 @@ export const getMyContractorEnum = () => async (dispatch) => {
       //dispatch(setCreditEnum(payload))
    }
 }
-
+/**
+ * Обновить статью
+ */
 export const updateExpenseItem = (data) => async (dispatch) => {
    let {title, parent, consumption, income, id} = data;
    parent = parent === '' ? 0 : parent
@@ -194,6 +229,9 @@ export const updateExpenseItem = (data) => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Добавить статью
+ */
 export const addExpenseItem = (data) => async (dispatch) => {
    let {title, parent, consumption, income} = data;
    parent = parent === '' ? 0 : parent
@@ -208,6 +246,9 @@ export const addExpenseItem = (data) => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Удаление статей
+ */
 export const deleteExpenseItem = id => async (dispatch) => {
    const formData = setFormData({id})
    try {
@@ -219,7 +260,9 @@ export const deleteExpenseItem = id => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
-
+/**
+ * Загрузка данных юр.лица
+ */
 export const updateContractorEnum = (query) => async (dispatch) => {
    const formData = setFormData({query})
    let payload = []
@@ -231,6 +274,9 @@ export const updateContractorEnum = (query) => async (dispatch) => {
    } catch (e) {
    }
 }
+/**
+ * Загрузка данных юр.лица
+ */
 export const updateContractorName = (id) => async (dispatch) => {
    const formData = setFormData({id})
    let payload
@@ -241,7 +287,9 @@ export const updateContractorName = (id) => async (dispatch) => {
 
    return payload
 }
-
+/**
+ * Загрузка справочника клиентов
+ */
 export const getGroupInfo = (id) => async (dispatch) => {
    const formData = setFormData({id})
    let payload
@@ -253,19 +301,30 @@ export const getGroupInfo = (id) => async (dispatch) => {
 
    return payload
 }
-
-export const projectEnumFilter = data => async (dispatch) => {
-   //let status = JSON.stringify(getArrayOfId(data.status))
-   //let client = JSON.stringify(getArrayOfId(data.client))
-
+/**
+ * Фильтрация проектов
+ */
+export const projectEnumFilter = (data, isDateChange = false) => async (dispatch) => {
    let status = getArrayOfId(data.status)
    let client = getArrayOfId(data.client)
-   console.log(status)
-   console.log(client)
-   const formData = setFormData({...data, status, client})
+   let period = getArrayOfId(data.period)
+
+   if (isDateChange) {
+      data = {
+         ...data,
+         page: 1,
+         client: null,
+         status: null,
+         budgetMin: null,
+         budgetMax: null,
+         period: null
+      }
+   }
+
+   const formData = setFormData({...data, status, client, period})
+
    try {
       let payload = await enumsAPI.getProjectsEnum(formData);
-
 
       dispatch(setProjectFilter(data))
       dispatch(updateProjectEnum(payload))
@@ -273,7 +332,9 @@ export const projectEnumFilter = data => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
-
+/**
+ * Загрузка дополнительных страниц для проектов
+ */
 export const downloadAdditionalProjectPages = data => async (dispatch) => {
    let status = getArrayOfId(data.status)
    let client = getArrayOfId(data.client)
@@ -288,10 +349,20 @@ export const downloadAdditionalProjectPages = data => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
-
-export const transEnumFilter = data => async (dispatch) => {
-
-
+/**
+ * Фильтрация транзакций
+ */
+export const transEnumFilter = (data, isDateChange = false) => async (dispatch) => {
+   if (isDateChange) {
+      data = {
+         ...data,
+         page: 1,
+         contragent: null,
+         type: null,
+         bank_account_in: null,
+         plan: null
+      }
+   }
    const formData = setFormData({...data})
    try {
       let payload = await enumsAPI.getTransEnum(formData);
@@ -302,6 +373,9 @@ export const transEnumFilter = data => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Загрузка дополнительных страниц для транзакций
+ */
 export const downloadAdditionalTransPages = data => async (dispatch) => {
    const formData = setFormData({...data})
    try {
@@ -313,6 +387,9 @@ export const downloadAdditionalTransPages = data => async (dispatch) => {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+/**
+ * Фильтрация справочника сотрудников
+ */
 export const membersEnumFilter = data => async (dispatch) => {
    const formData = setFormData({...data})
    try {

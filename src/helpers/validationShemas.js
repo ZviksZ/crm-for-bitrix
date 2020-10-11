@@ -1,13 +1,11 @@
 import * as yup from "yup";
 
 export const addModalSchema = yup.object().shape({
-  /* creditAccount: yup.string().required('Обязательное поле'),
-   expenseItem: yup.string().required('Обязательное поле'),
-   project: yup.string().required('Обязательное поле'),
-   contractor: yup.string().required('Обязательное поле'),
-   document: yup.string().required('Обязательное поле')*/
+   date: yup.string().required('Обязательное поле'),
+   amount: yup.string().required('Обязательное поле'),
+   cost_item: yup.string().required('Обязательное поле'),
+   bank_account_in: yup.string().required('Обязательное поле'),
 });
-
 export const loginSchema = yup.object().shape({
    login: yup.string().required('Обязательное поле'),
    password: yup.string().required('Обязательное поле'),

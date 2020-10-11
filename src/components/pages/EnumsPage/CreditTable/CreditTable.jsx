@@ -10,14 +10,6 @@ import {CreditTableItem}      from "./CreditTableItem.jsx";
 
 export const CreditTable = (props) => {
    const {sortedData, sortField, sort, onSort} = useSort(props.enum)
-   let uniqueEntity = [];
-
-
-   sortedData.forEach(item => {
-      if (!uniqueEntity.includes(item.entity)) {
-         uniqueEntity.push(item.entity);
-      }
-   })
 
    return (
       <>
@@ -29,32 +21,50 @@ export const CreditTable = (props) => {
                <table className={cn(styles.projectTable, 'custom-table')}>
                   <thead>
                   <tr>
-                     <th onClick={onSort.bind(null, 'entity')}>
+                     <th onClick={onSort.bind(null, 'title', false)}>
                   <span>
                      Наименование счета
+                     {sortField === 'title' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
+                     </th>
+                     <th onClick={onSort.bind(null, 'entity', false)}>
+                  <span>
+                     Юр.лицо
                      {sortField === 'entity' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
                   </span>
                      </th>
-                     <th>
-                        <span>тип счета</span>
+                     <th onClick={onSort.bind(null, 'type', false)}>
+                  <span>
+                     тип счета
+                     {sortField === 'type' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
                      </th>
-                     <th>
-                        <span>валюта</span>
+                     <th onClick={onSort.bind(null, 'currency', false)}>
+                  <span>
+                    валюта
+                     {sortField === 'currency' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
                      </th>
-                     <th>
-                        <span>статус счета</span>
+                     <th onClick={onSort.bind(null, 'status', false)}>
+                  <span>
+                     статус счета
+                     {sortField === 'status' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
                      </th>
-                     <th className="budget">
-                        <span>остаток</span>
+                     <th onClick={onSort.bind(null, 'balance', true)} className="budget">
+                  <span>
+                     остаток
+                     {sortField === 'balance' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
                      </th>
+
                      <th></th>
                   </tr>
                   </thead>
                   <tbody>
 
                   {
-                     uniqueEntity.map(item => <CreditTableItem sortedData={sortedData}
-                                                               key={item}
+                     sortedData.map((item,index) => <CreditTableItem key={item.id}
                                                                item={item}
                                                                types={props.types}
                                                                updateContractorName={props.updateContractorName}

@@ -51,14 +51,34 @@ export const SidebarMenu = ({toggleMenu, logoutUser}) => {
                <span>Транзакции</span>
             </NavLink>
 
+            <NavLink to='/projects'
+                     className={styles.links} onClick={toggleMenu}
+                     activeClassName={styles.activeLink}>
+               <i className="icon-bar-chart"></i>
+               <span>Проекты</span>
+            </NavLink>
 
-            <NavLink to='/demo-graph'
+            <NavLink to='/members'
+                     className={styles.links} onClick={toggleMenu}
+                     activeClassName={styles.activeLink}>
+               <i className="icon-userscustom"></i>
+               <span>Сотрудники</span>
+            </NavLink>
+
+            <NavLink to='/awards'
+                     className={styles.links} onClick={toggleMenu}
+                     activeClassName={styles.activeLink}>
+               <i className="icon-outline-receipt-24px-default"></i>
+               <span>Премии</span>
+            </NavLink>
+
+           {/* <NavLink to='/demo-graph'
                      className={styles.links} onClick={toggleMenu}
                      activeClassName={styles.activeLink}>
                <i className="icon-outline-contact-support-24px-default"></i>
                <span>Демо графиков</span>
             </NavLink>
-
+*/}
             <Divider className={styles.divider}/>
 
             {/* <NavLink to='/sales' onClick={toggleMenu}

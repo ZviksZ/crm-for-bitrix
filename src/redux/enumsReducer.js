@@ -64,6 +64,7 @@ let initialState = {
          {id: '2', title: "Ожидает выполнения"},
          {id: '3', title: "В работе"}
       ],
+      period: [{id: 1, title: 'Разовый'}, {id: 2, title: 'Ежемесячный'}],
       budgetMin: null,
       budgetMax: null,
       start: formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1), true),

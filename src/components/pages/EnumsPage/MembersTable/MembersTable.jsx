@@ -21,19 +21,19 @@ const MembersTable = (props) => {
             <table className={cn(styles.projectTable, 'custom-table')}>
                <thead>
                <tr>
-                  <th onClick={onSort.bind(null, 'unit')}>
+                  <th onClick={onSort.bind(null, 'unit', false)}>
                   <span>
                      подразделение
                      {sortField === 'unit' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
                   </span>
                   </th>
-                  <th onClick={onSort.bind(null, 'name')}>
+                  <th onClick={onSort.bind(null, 'name', false)}>
                   <span>
                      Сотрудник
                      {sortField === 'name' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
                   </span>
                   </th>
-                  <th onClick={onSort.bind(null, 'budget')}  className="budget">
+                  <th onClick={onSort.bind(null, 'budget', true)}  className="budget">
                   <span>
                      Стоимость часа
                      {sortField === 'budget' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}

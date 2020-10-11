@@ -1,0 +1,61 @@
+.projectClientTable {
+    td, th {
+        white-space: nowrap;
+    }
+    td {
+        font-size: 14px;
+        line-height: 17px;
+        letter-spacing: -0.05px;
+        color: #263238;
+        font-weight: 500;
+    }
+    .name, .client {
+        white-space: initial;
+    }
+    .clientRow {
+        td {
+            font-weight: 700;
+            background: #F1F5F7;
+            box-shadow: inset 0px -1px 0px #EEEEEE;
+        }
+    }
+    .projectRow, .clientRow {
+        .name {
+            display: flex;
+            align-items: center;
+            i {
+                display: inline-block;
+                font-size: 26px;
+                margin-right: 17px;
+                color: #546E7A;
+            }
+        }
+    }
+    .projectRow {
+        display: none;
+        .name {
+            i {
+                margin-right: 20px;
+            }
+        }
+
+    }
+    .taskRow {
+        display: none;
+        .name {
+            padding-left: 30px;
+        }
+    }
+    .showTableRow {
+        display: table-row;
+    }
+    .rotateIcon {
+        .name {
+            i {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+}
+

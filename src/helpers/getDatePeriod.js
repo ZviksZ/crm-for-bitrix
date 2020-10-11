@@ -71,20 +71,24 @@ export function getDatePeriod(value) {
       case 7:
          break;
       case 8:
-         dateFrom = new Date(null);
+         dateFrom = new Date(currentYear - 2, 0, 1);
          dateTo = new Date(currentYear + 10, 0, 1);
          break;
       default:
          break;
    }
 
+   if (value === 8) {
+      /*dateFrom = null
+      dateTo = null*/
+      dateFrom = new Date(currentYear - 2, 0, 1);
+      dateTo = new Date(currentYear, currentMonth + 1, 0);
+   }
+
    dateFrom = formatDate(dateFrom, true)
    dateTo = formatDate(dateTo, true)
 
-   if (value === 8) {
-      dateFrom = null
-      dateTo = null
-   }
+
 
    return {dateFrom, dateTo}
 

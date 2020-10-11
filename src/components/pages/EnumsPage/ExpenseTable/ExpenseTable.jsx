@@ -22,7 +22,7 @@ export const ExpenseTable = (props) => {
                <table className={cn(styles.projectTable, 'custom-table')}>
                   <thead>
                   <tr>
-                     <th onClick={onSort.bind(null, 'title')}>
+                     <th onClick={onSort.bind(null, 'title', false)}>
                   <span>
                      Название
                      {sortField === 'title' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}

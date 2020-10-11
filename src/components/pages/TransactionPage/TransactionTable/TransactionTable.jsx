@@ -3,6 +3,7 @@ import React, {useState}                                                     fro
 import {connect}                                                             from "react-redux";
 import {useSort}                                                             from "../../../../helpers/useSort.hook.js";
 import {openAddModalWithData}                                                from "../../../../redux/appReducer.js";
+import {getTransactionsWithNames}                                            from "../../../../redux/selectors/enumsSelectors.js";
 import {downloadAdditionalTransPages, transEnumFilter, updateContractorName} from "../../../../redux/thunk/enumsThunks.js";
 import TransactionFilter                                                     from "../../../common/EnumsFilters/TransactionFilter/TransactionFilter.jsx";
 import {PeriodForm}                                                          from "../../../common/EnumsForms/PeriodForm/PeriodForm.jsx";
@@ -57,6 +58,27 @@ export const TransactionTable = (props) => {
                      {sortField === 'amount' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
                   </span>
                         </th>
+
+                        <th >
+                  <span>
+                     валюта
+                  </span>
+                        </th>
+
+                        <th onClick={onSort.bind(null, 'projectName')} >
+                  <span>
+                     проект
+                     {sortField === 'projectName' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
+                        </th>
+
+                        <th onClick={onSort.bind(null, 'contractorName')} >
+                  <span>
+                     контрагент
+                     {sortField === 'contractorName' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                  </span>
+                        </th>
+
                         <th onClick={onSort.bind(null, 'comment')}>
                   <span>
                      Комментарий
@@ -89,7 +111,7 @@ export const TransactionTable = (props) => {
 
 let mapStateToProps = (state) => {
    return {
-      enum: state.enum.enums.transactionEnum,
+      enum: getTransactionsWithNames(state),
       allEnums: state.enum.enums,
       transFilter: state.enum.transFilter
    }

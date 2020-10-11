@@ -77,6 +77,12 @@ export const ProjectTable = (props) => {
                         {sortField === 'budget' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
                      </span>
                            </th>
+                           <th onClick={onSort.bind(null, 'period', true)} >
+                     <span>
+                        периодичность
+                        {sortField === 'period' ? <i className={cn({['sort-icon-rotate']: sort === 'asc'}, 'sort-icon', 'icon-outline-arrow-downward-24px-default')}/> : null}
+                     </span>
+                           </th>
                            <th></th>
                         </tr>
                         </thead>

@@ -1,5 +1,5 @@
-import _                                  from "lodash";
-import {useState, useEffect, useCallback} from 'react'
+import _                                          from "lodash";
+import {useState, useEffect, useCallback, useRef} from 'react'
 
 export const useSort = (enums, countOnPage, filterFn, filter) => {
    const [sortedData, setSortedData] = useState(enums?.data || []);
@@ -12,12 +12,13 @@ export const useSort = (enums, countOnPage, filterFn, filter) => {
    const [currentPage, setCurrentPage] = useState(1);
    const [apiPromises, setApiPromises] = useState([])
    const [loaded, setLoaded] = useState(false)
-   const [pageNumb, setPageNumb] = useState(1);
 
    const setAllEnumPromises = () => {
       const pageNum = Math.ceil(enums.size / 50);
+
       let promises = []
       if (!loaded) {
+
          if (pageNum >= 2) {
             for (let i = 2; i <= pageNum; i++) {
                promises.push(filterFn({...filter, page: +i}))
@@ -96,24 +97,23 @@ export const useSort = (enums, countOnPage, filterFn, filter) => {
    }, [allData])
 
    useEffect(() => {
-      if (currentPage === 1) {
+      if (currentPage === 1 && Object.keys(enums).length > 0) {
          setAllEnumPromises();
          loadEnumPages().then(() => console.log());
       }
-   }, [currentPage, enums.size ])
+   }, [currentPage, enums.size, loaded])
 
    useEffect(() => {
-      setAllData(enums?.data || []);
+      if (Object.keys(enums).length > 0) {
+         setAllData(enums?.data || []);
+         setItemCount(count);
 
-      setItemCount(count);
-
-
-      if (enums.page == '1') {
-         setCurrentPage(1)
-         setLoaded(false)
+         if (enums.page == '1') {
+            setLoaded(false)
+            setCurrentPage(1)
+         }
       }
-
-   }, [enums.data,filter])
+   }, [enums, filter])
 
    return {
       sortedData,

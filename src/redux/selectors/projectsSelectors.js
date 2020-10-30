@@ -54,9 +54,7 @@ export const getMinMaxProjectClient = createSelector(getProjectsClientData,(proj
          for (let i = 0; i < data.length; i++) {
             let projectsList = data[i].projects;
             projectsList.forEach(item => {
-               if (item.budget) {
-                  budgets.push(item.budget)
-               }
+               budgets.push(item.budget)
             })
          }
       }

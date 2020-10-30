@@ -91,7 +91,7 @@ export const TransactionTable = (props) => {
                      </thead>
                      <tbody>
                      {
-                        sortedData.map(item => <TransactionTableItem updateContractorName={props.updateContractorName} enums={props.allEnums} key={item.id}
+                        sortedData.map(item => <TransactionTableItem accessItems={props.accessItems} updateContractorName={props.updateContractorName} enums={props.allEnums} key={item.id}
                                                                      openAddModalWithData={props.openAddModalWithData} item={item}/>)
                      }
                      </tbody>
@@ -113,6 +113,7 @@ let mapStateToProps = (state) => {
    return {
       enum: getTransactionsWithNames(state),
       allEnums: state.enum.enums,
+      accessItems: state.auth.acl,
       transFilter: state.enum.transFilter
    }
 }

@@ -1,11 +1,13 @@
-import {membersAPI}                from "../api/api.js";
-import {getArrayOfId, setFormData} from "../helpers/utils.js";
-import {getGlobalError}            from "./appReducer.js";
+import _                                       from "lodash";
+import {kanbanAPI, membersAPI}                 from "../api/api.js";
+import {formatDate, getArrayOfId, setFormData} from "../helpers/utils.js";
+import {getGlobalError}                        from "./appReducer.js";
 
 const SET_MEMBERS_DATA = 'marginlab/members/SET_MEMBERS_DATA';
 const SET_MEMBERS_FILTER = 'marginlab/members/SET_MEMBERS_FILTER';
 const SET_AWARDS_DATA = 'marginlab/members/SET_AWARDS_DATA';
 const SET_AWARDS_FILTER = 'marginlab/members/SET_AWARDS_FILTER';
+const SET_KANBAN = 'marginlab/members/SET_KANBAN';
 
 let initialState = {
    members: null,
@@ -26,7 +28,8 @@ let initialState = {
       start: null,
       finish: null,
       page: 1
-   }
+   },
+   kanban: null
 };
 
 const membersReducer = (state = initialState, action) => {
@@ -51,6 +54,11 @@ const membersReducer = (state = initialState, action) => {
             ...state,
             awardsFilter: action.payload
          }
+      case SET_KANBAN:
+         return {
+            ...state,
+            kanban: action.payload
+         }
       default:
          return state;
    }
@@ -59,7 +67,41 @@ export const setMembersData = (payload) => ({type: SET_MEMBERS_DATA, payload})
 export const setMembersFilter = (payload) => ({type: SET_MEMBERS_FILTER, payload})
 export const setAwardsData = (payload) => ({type: SET_AWARDS_DATA, payload})
 export const setAwardsFilter = (payload) => ({type: SET_AWARDS_FILTER, payload})
+export const setKanban = (payload) => ({type: SET_KANBAN, payload})
 
+
+/**
+ * Получить канбан
+ */
+export const getKanbanData = (data) => async (dispatch, getState) => {
+   let formData = {}
+   let state = getState()
+
+   if (!data) {
+      let members = _.orderBy(state.enum.enums.membersEnum, 'name', 'asc');
+      let user = members.find(item => item.id == state.auth.userId);
+      if (user.kanban === 1) {
+         formData = setFormData({
+            id: state.auth.userId,
+            start: formatDate(new Date(), true)
+         })
+      } else {
+         formData = setFormData({
+            id: members[0].id,
+            start: formatDate(new Date(), true)
+         })
+      }
+   } else {
+      formData = setFormData(data)
+   }   try {
+      dispatch(setKanban(null))
+      let payload = await kanbanAPI.getKanbanData(formData)
+
+      dispatch(setKanban(payload))
+   } catch (e) {
+      dispatch(getGlobalError('Загрузка данных канбана не удалась', 'error'))
+   }
+}
 /**
  * Получить все данные по сотрудникам
  */
@@ -68,6 +110,7 @@ export const getMembersData = (data) => async (dispatch) => {
    let formData = setFormData(data)
 
    try {
+      dispatch(setMembersData(null))
       let payload = await membersAPI.getMembersData(formData)
 
       dispatch(setMembersData(payload))

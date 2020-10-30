@@ -7,7 +7,22 @@ export const getAllProjects = state => state.enum.enums.projectsEnum;
 export const getTransactionEnum = state => state.enum.enums.transactionEnum;
 export const getAllEnums = state => state.enum.enums;
 export const getGroupEnum = state => state.enum.enums.groupEnum;
+export const getMembersEnum = state => state.enum.enums.membersEnum;
 
+
+
+export const getSortedMembers = createSelector(
+   getMembersEnum,
+   (members) => {
+      let data = members
+      if (members) {
+        data = _.orderBy(members, 'name', 'asc');
+        data = data.filter(item => item.kanban === 1)
+      }
+
+      return data
+   }
+)
 export const getUniqueEntity = createSelector(
    getCreditAccountEnum,
    (creditAccountEnum) => {

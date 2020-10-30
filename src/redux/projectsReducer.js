@@ -77,6 +77,7 @@ export const getProjectClientFilter = (data, isDateChange = false) => async (dis
 
    try {
       dispatch(setProjectsClientData(null))
+
       let payload = await projectsAPI.getProjectsData(formData);
 
       dispatch(setProjectsClientFilter(data))

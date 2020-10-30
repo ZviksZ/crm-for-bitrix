@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 
 export const useSort = (data, dateFilter, isProjectsPage = false) => {
 
-   const [sortedData, setSortedData] = useState(data)
+   const [sortedData, setSortedData] = useState([])
    const [sort, setSort] = useState('asc')
    const [sortField, setSortField] = useState('')
 
@@ -81,7 +81,9 @@ export const useSort = (data, dateFilter, isProjectsPage = false) => {
    }
 
    useEffect(() => {
-      setSortedData(data)
+      if (data.length > 0) {
+         setSortedData(data)
+      }
    }, [data])
 
    return {sortedData, setFilter, sortField, sort, onSort}

@@ -21,14 +21,15 @@ const theme = createMuiTheme({
 });
 
 export const App = () => {
-   const {isLoading, isAuth} = useSelector(state => ({
+   const {isLoading, isAuth, accessItems} = useSelector(state => ({
       isAuth: state.auth.isAuth,
+      accessItems: state.auth.acl,
       isLoading: state.common.isLoading
    }))
 
 
    const dispatch = useDispatch()
-   const routes = useRoutes(isAuth);
+   const routes = useRoutes(isAuth, accessItems);
 
    useEffect(() => {
       dispatch(cookieUser())

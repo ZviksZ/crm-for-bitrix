@@ -10,14 +10,14 @@ import {DatePicker, MuiPickersUtilsProvider}                                    
 import ruLocale                                                                      from "date-fns/locale/ru";
 import React, {useEffect, useState}                                                  from 'react';
 import {useForm}                                                                     from "react-hook-form";
-import {connect}                                                                                            from "react-redux";
-import * as yup                                                                                             from "yup";
-import {NumberFormatCustom}                                                                                 from "../../../helpers/formFields.jsx";
-import {sortExpenseEnum}                                                        from "../../../helpers/utils.js";
-import {addTransaction, closeAddModalWithData, deleteTransaction, updateTransaction}                        from "../../../redux/appReducer.js";
-import {updateContractorEnum, updateProjects}                                                               from "../../../redux/thunk/enumsThunks.js";
-import {OutsideAlerter}                                                                                     from "../../hoc/OutsideAlerter.jsx";
-import styles                                                                                               from './AddModal.module.scss';
+import {connect}                                                                     from "react-redux";
+import * as yup                                                                      from "yup";
+import {NumberFormatCustom}                                                          from "../../../helpers/formFields.jsx";
+import {sortExpenseEnum}                                                             from "../../../helpers/utils.js";
+import {addTransaction, closeAddModalWithData, deleteTransaction, updateTransaction} from "../../../redux/appReducer.js";
+import {updateContractorEnum, updateProjects}                                        from "../../../redux/thunk/enumsThunks.js";
+import {OutsideAlerter}                                                              from "../../hoc/OutsideAlerter.jsx";
+import styles                                                                        from './AddModal.module.scss';
 import {AddModalHeader}                                                              from "./AddModalHeader.jsx";
 
 
@@ -31,11 +31,11 @@ const AddModal = ({
    const addModalSchemaType = yup.object().shape({
       date: yup.string().required('Обязательное поле'),
       amount: yup.string().required('Обязательное поле'),
-      ...(addModalData.type === '2' && {consider:  yup.string().required('Обязательное поле')}),
-      ...(addModalData.type === '1' && {cost_item:  yup.string().required('Обязательное поле')}),
-      ...(addModalData.type === '2' && {cost_item:  yup.string().required('Обязательное поле')}),
-      ...(addModalData.type !== '2' && {bank_account_in:  yup.string().required('Обязательное поле')}),
-      ...(addModalData.type !== '1' && {bank_account_out:  yup.string().required('Обязательное поле')}),
+      ...(addModalData.type === '2' && {consider: yup.string().required('Обязательное поле')}),
+      ...(addModalData.type === '1' && {cost_item: yup.string().required('Обязательное поле')}),
+      ...(addModalData.type === '2' && {cost_item: yup.string().required('Обязательное поле')}),
+      ...(addModalData.type !== '2' && {bank_account_in: yup.string().required('Обязательное поле')}),
+      ...(addModalData.type !== '1' && {bank_account_out: yup.string().required('Обязательное поле')}),
 
    });
 
@@ -50,7 +50,7 @@ const AddModal = ({
 
    if (addModalData.type === '1') {
       expenseList = sortExpenseEnum(enums.expenseItemEnum).filter(item => item.income === true)
-   } else if  (addModalData.type === '2') {
+   } else if (addModalData.type === '2') {
       expenseList = sortExpenseEnum(enums.expenseItemEnum).filter(item => item.consumption === true)
    }
 
@@ -367,11 +367,11 @@ const AddModal = ({
                               renderOption={(option, {selected}) => {
                                  if (option.parent == 0) {
                                     return <div className="customOption customOptionParent">
-                                          {option.title}
-                                       </div>
+                                       {option.title}
+                                    </div>
                                  } else {
                                     return <div className="customOption">
-                                      {option.title}
+                                       {option.title}
                                     </div>
                                  }
                               }}

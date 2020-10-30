@@ -1,8 +1,8 @@
-import cn                 from "classnames";
-import React, {useState}  from 'react';
-import {useSort}          from "../../../../helpers/useSortRes.hook.js";
-import {numberWithSpace} from "../../../../helpers/utils.js";
-import styles             from '../EnumsForms.module.scss'
+import cn                            from "classnames";
+import React, {useState}             from 'react';
+import {useSort}                     from "../../../../helpers/useSortRes.hook.js";
+import {formatDate, numberWithSpace} from "../../../../helpers/utils.js";
+import styles                        from '../EnumsForms.module.scss'
 
 export const FormHistory = ({history, membersEnum}) => {
    const [showHistory, setShowHistory] = useState(false)
@@ -59,7 +59,7 @@ export const FormHistory = ({history, membersEnum}) => {
                         let author = membersEnum.find(i => i.id === item.author)?.name || '';
 
                         return <tr key={index}>
-                           <td>{item.date}</td>
+                           <td>{formatDate(item.date)}</td>
                            <td>{budget}</td>
                            <td>{item.comment}</td>
                            <td>{author}</td>

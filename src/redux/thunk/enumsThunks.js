@@ -1,5 +1,6 @@
 /* Thunks, functions */
 import {enumsAPI}                                                from "../../api/api.js";
+import {Cookie}                                                  from "../../helpers/cookie.js";
 import {getDatePeriod}                                           from "../../helpers/getDatePeriod.js";
 import {addObjectToArray, formatDate, getArrayOfId, setFormData} from "../../helpers/utils.js";
 import {getGlobalError, setEnumsLoaded, setLoading}              from "../appReducer.js";
@@ -11,10 +12,10 @@ import {
    setCreditAdditionalBasic, setCreditEnum,
    setEnums,
    setMemberPrice,
-   setProjectBudget, setProjectFilter,
+   setProjectBudget, setProjectFilter, setProjectPeriodFilter,
    setProjectStatuses,
    setProjectsToForm, setTransFilter, updateMembersEnum, updateProjectEnum, updateTransEnum
-}                                                                from "../enumsReducer.js";
+} from "../enumsReducer.js";
 /**
  * Получение справочников битрикса
  */
@@ -36,14 +37,37 @@ export const getBitrixEnums = () => async (dispatch) => {
 /**
  * Получение всех необходимых справочников при загрузке приложения
  */
-export const getAppEnums = () => async (dispatch) => {
+export const getAppEnums = () => async (dispatch, getState) => {
    dispatch(setLoading(true))
-   let projFormData = setFormData({
-      start: formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1), true),
-      finish: formatDate(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), true),
-      status: [1, 2, 3],
-      period: [1, 2]
-   })
+   dispatch(setEnumsLoaded(false))
+
+   let filterPeriod = Cookie.getCookie('projectEnumPeriodFilter');
+   let filter = Cookie.getCookie('projectEnumFilter');
+   let projData = filter ? JSON.parse(filter + '') : null
+   let projPeriodData = filterPeriod ? JSON.parse(filterPeriod + '') : null
+   let projFormData;
+
+   if (projData) {
+      let status = getArrayOfId(projData.status)
+      let client = getArrayOfId(projData.client)
+      let period = getArrayOfId(projData.period)
+
+      projFormData = setFormData({...projData, status, client, period})
+
+      dispatch(setProjectFilter(projData))
+   } else {
+      projFormData = setFormData({
+         start: formatDate(new Date(new Date().getFullYear(), new Date().getMonth(), 1), true),
+         finish: formatDate(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), true),
+         status: [1, 2, 3],
+         period: [1, 2]
+      })
+   }
+
+   if (projPeriodData) {
+      dispatch(setProjectPeriodFilter(projPeriodData))
+   }
+
    Promise.all([
       enumsAPI.getCreditAccountEnum(),
       enumsAPI.getExpenseItemEnum(),
@@ -54,16 +78,13 @@ export const getAppEnums = () => async (dispatch) => {
       enumsAPI.getCreditCurrency(),
       enumsAPI.getCreditType(),
       enumsAPI.getTransEnum(),
-
       enumsAPI.getProjectsEnum(),
    ]).then(async (res) => {
       await dispatch(getBitrixEnums())
-
       dispatch(setEnums(res[0], res[1], res[2], res[3], res[8]))
       dispatch(setProjectsToForm(res[9]))
       await dispatch(getAllProjects(res[9]))
       dispatch(setProjectStatuses(res[4]))
-
       dispatch(setCreditAdditional(addObjectToArray(res[5]), addObjectToArray(res[6]), addObjectToArray(res[7])))
       dispatch(setCreditAdditionalBasic(res[5], res[6], res[7]))
       //dispatch(setImportStaff(res[10]))
@@ -145,6 +166,7 @@ export const changeMemberPrice = (memberId, newBudget) => async (dispatch) => {
    const formData = setFormData({id: memberId, date, budget, comment, author})
    try {
       await enumsAPI.changeMemberPrice(formData)
+
       dispatch(setMemberPrice(memberId, newBudget))
       dispatch(getGlobalError('Ставка изменена', 'success'))
    } catch (e) {
@@ -309,9 +331,12 @@ export const projectEnumFilter = (data, isDateChange = false) => async (dispatch
    let client = getArrayOfId(data.client)
    let period = getArrayOfId(data.period)
 
+   let dataOld = data;
+   let dataForm;
    if (isDateChange) {
-      data = {
-         ...data,
+      dataForm = {
+         start: data.start,
+         finish: data.finish,
          page: 1,
          client: null,
          status: null,
@@ -319,27 +344,50 @@ export const projectEnumFilter = (data, isDateChange = false) => async (dispatch
          budgetMax: null,
          period: null
       }
+      dataOld = {
+         start: data.start,
+         finish: data.finish,
+         page: 1,
+         client: null,
+         status: null,
+         budgetMin: null,
+         budgetMax: null,
+         period: null
+      }
+   } else {
+      dataForm = {
+         ...data,
+         status,
+         client,
+         period
+      }
    }
 
-   const formData = setFormData({...data, status, client, period})
+   const formData = setFormData({...dataForm})
 
    try {
       let payload = await enumsAPI.getProjectsEnum(formData);
 
-      dispatch(setProjectFilter(data))
+      dispatch(setProjectFilter(dataOld))
+
+      let jsonResponse = await JSON.stringify(dataOld)
+      await Cookie.setCookie('projectEnumFilter', jsonResponse, {expires: 2147483647});
+
       dispatch(updateProjectEnum(payload))
    } catch (e) {
       dispatch(getGlobalError('Ошибка', 'error'))
    }
 }
+
 /**
  * Загрузка дополнительных страниц для проектов
  */
 export const downloadAdditionalProjectPages = data => async (dispatch) => {
    let status = getArrayOfId(data.status)
    let client = getArrayOfId(data.client)
+   let period = getArrayOfId(data.period)
 
-   const formData = setFormData({...data, status, client})
+   const formData = setFormData({...data, status, client, period})
    try {
       let payload = await enumsAPI.getProjectsEnum(formData);
 

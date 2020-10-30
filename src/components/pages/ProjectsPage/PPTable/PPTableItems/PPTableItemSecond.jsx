@@ -31,13 +31,13 @@ export const PPTableItemSecond = ({item, isOpen}) => {
          <td>{numberWithSpace(item.profitPercent)}</td>
       </tr>
       {
-         item?.tasks && item.tasks.map(task => <PPTableItemThird isParentOpen={isOpen} isOpen={showTasks} item={task} key={task.id} projectStatuses={projectStatuses}/>)
+         showTasks && item?.tasks && item.tasks.map(task => <PPTableItemThird isParentOpen={isOpen} isOpen={showTasks} item={task} key={task.id} projectStatuses={projectStatuses}/>)
       }
       {
-         item?.transactions && item.transactions.map(transaction => <PPTableItemThird isParentOpen={isOpen} isOpen={showTasks} item={transaction} projectStatuses={projectStatuses} key={transaction.id}/>)
+         showTasks && item?.transactions && item.transactions.map(transaction => <PPTableItemThird isParentOpen={isOpen} isOpen={showTasks} item={transaction} projectStatuses={projectStatuses} key={transaction.id}/>)
       }
       {
-         item?.indirect && <tr className={cn({[s.showTableRow]: showTasks && isOpen}, s.taskRow)}>
+         showTasks && item?.indirect && <tr className={cn({[s.showTableRow]: showTasks && isOpen}, s.taskRow)}>
             <td >
                <div className={s.name}>
                   <span> Косвенные расходы</span>

@@ -108,11 +108,17 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    &.filterBlock-reverse {
+        justify-content: flex-start;
+    }
     @media screen and (max-width:1000px) {
         flex-wrap: wrap;
     }
     .btn {
         margin-bottom: 18px;
+    }
+    &.filter-block-with-title {
+        justify-content: space-between;
     }
 }
 .table-summary {
@@ -333,43 +339,52 @@
         white-space: nowrap;
     }
     td:nth-child(1) {
-        width: 390px;
-        min-width: 390px;
+        width: 250px;
+        min-width: 250px;
+        max-width: 250px;
     }
     td:nth-child(2),
     td:nth-child(3),
     td:nth-child(4),
     td:nth-child(5) {
+        width: 110px;
+        min-width: 110px;
+        max-width: 110px;
+    }
+    td:nth-child(6) {
         width: 140px;
         min-width: 140px;
+        max-width: 140px;
     }
-    td:nth-child(6),
+
     td:nth-child(7),
     td:nth-child(8),
     td:nth-child(9),
     td:nth-child(10) {
-        width: 110px;
-        min-width: 110px;
+        width: 80px;
+        min-width: 80px;
     }
     @media screen and (max-width:1000px) {
         td:nth-child(1) {
-            width: 330px;
-            min-width: 330px;
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
         }
         td:nth-child(2),
         td:nth-child(3),
         td:nth-child(4),
         td:nth-child(5) {
-            width: 110px;
-            min-width: 110px;
+            width: 90px;
+            min-width: 90px;
+            max-width: 90px;
         }
         td:nth-child(6),
         td:nth-child(7),
         td:nth-child(8),
         td:nth-child(9),
         td:nth-child(10) {
-            width: 110px;
-            min-width: 110px;
+            width: 90px;
+            max-width: 90px;
         }
     }
 }
@@ -639,6 +654,12 @@
         }
     }
 }
-.MuiAutocomplete-listbox,.MuiAutocomplete-paper {
-    padding: 0 !important;
+
+
+
+.members-select {
+    .MuiSelect-root.MuiSelect-select {
+        cursor: pointer !important;
+        background: #fff !important;
+    }
 }

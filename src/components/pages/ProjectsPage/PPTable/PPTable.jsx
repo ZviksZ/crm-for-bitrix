@@ -35,7 +35,7 @@ const PPTable = (props) => {
          })
       }
 
-   }, [props.isEnumsLoaded])
+   }, [props.isEnumsLoaded, props.getProjectClient])
 
    return (
       <>

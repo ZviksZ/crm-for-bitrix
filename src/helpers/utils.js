@@ -17,7 +17,6 @@ export function setFormData(args) {
    return formData
 }
 
-
 export function formatDate(data, fullYear) {
    let date = new Date(data);
 
@@ -39,7 +38,6 @@ export function formatDate(data, fullYear) {
 
    return dd + '.' + mm + '.' + yy;
 }
-
 
 export function addObjectToArray(obj) {
    let array = [];
@@ -87,7 +85,6 @@ export function getArrayOfId(array) {
    return ids
 }
 
-
 export function sortExpenseEnum(expenseEnum) {
    let newObj = []
 
@@ -102,6 +99,38 @@ export function sortExpenseEnum(expenseEnum) {
    })
 
    return newObj
+}
+
+export function getUniqueRoutes(data) {
+   let uniqueRoutes = []
+
+   if (data) {
+      for (let i = 0; i < data.length; i++) {
+         if (!uniqueRoutes.includes(data[i].title) && data[i].parent === 0) {
+            uniqueRoutes.push(data[i].title)
+         }
+      }
+   }
+
+   return uniqueRoutes
+}
+export function getRoutesChilds(data) {
+   let routesChilds = []
+
+   if (data) {
+      for (let i = 0; i < data.length; i++) {
+         if (data[i].parent === 0) {
+            routesChilds[data[i].title] = [];
+            for (let j = 0; j < data.length; j++) {
+               if (data[i].id === data[j].parent) {
+                  routesChilds[data[i].title].push(data[j].title)
+               }
+            }
+         }
+      }
+   }
+
+   return routesChilds
 }
 
 

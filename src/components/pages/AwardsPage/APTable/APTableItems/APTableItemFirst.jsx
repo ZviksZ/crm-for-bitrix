@@ -26,7 +26,7 @@ export const APTableItemFirst = ({item}) => {
          <td></td>
       </tr>
       {
-         item.projects.map(project => <APTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
+         showProjects && item.projects.map(project => <APTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
       }
    </>;
 }

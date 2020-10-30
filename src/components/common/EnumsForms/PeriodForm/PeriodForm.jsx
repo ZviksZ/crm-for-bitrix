@@ -5,23 +5,52 @@ import MenuItem                              from "@material-ui/core/MenuItem";
 import Select                                from "@material-ui/core/Select";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import cn                                    from "classnames";
-import React, { useState}          from 'react';
+import React, {useEffect, useState}          from 'react';
+import {useDispatch}                         from "react-redux";
+import {Cookie}                              from "../../../../helpers/cookie.js";
 import {getDatePeriod}                       from "../../../../helpers/getDatePeriod.js";
 import {formatDate}                          from "../../../../helpers/utils.js";
+import {setProjectPeriodFilter}              from "../../../../redux/enumsReducer.js";
 import styles                                from './PeriodForm.module.scss';
 import ruLocale                              from "date-fns/locale/ru";
 
 
-export const PeriodForm = ({setFilter, filter, defPeriod}) => {
+export const PeriodForm = ({setFilter, filter, defPeriod, isProjectForm = false, projectFilterPeriod = null}) => {
    const [customPeriod, showCustomPeriod] = useState(false)
    const [dateFrom, setDateFrom] = useState(new Date())
    const [dateTo, setDateTo] = useState(new Date())
    const [period, setPeriod] = useState(defPeriod)
+   const [isSetPeriod, setIsSetPeriod] = useState(false)
+
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+      if (isProjectForm && projectFilterPeriod) {
+         let jsonResponse = JSON.stringify({...projectFilterPeriod, dateFrom, dateTo, period})
+         Cookie.setCookie('projectEnumPeriodFilter', jsonResponse, {expires: 2147483647});
+         dispatch(setProjectPeriodFilter({...projectFilterPeriod, dateFrom, dateTo, period}))
+      }
+   }, [dateTo, dateFrom, period]);
+
+   useEffect(() => {
+      if (isProjectForm && projectFilterPeriod && !isSetPeriod) {
+         projectFilterPeriod.dateFrom && setDateFrom(projectFilterPeriod.dateFrom)
+         projectFilterPeriod.dateTo && setDateTo(projectFilterPeriod.dateTo)
+         projectFilterPeriod.period && setPeriod(projectFilterPeriod.period)
+         setIsSetPeriod(true)
+         if (projectFilterPeriod.period == 7) {
+            showCustomPeriod(true)
+         }
+      }
+   }, [projectFilterPeriod])
+
 
    const handleDateChangeFrom = (date) => {
       setDateFrom(date)
       if (date < dateTo) {
          setFilter({...filter, page: 1,start: formatDate(date, true), finish: formatDate(dateTo, true)}, true)
+
+
       }
    };
    const handleDateChangeTo = (date) => {

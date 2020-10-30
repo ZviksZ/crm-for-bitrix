@@ -21,7 +21,7 @@ export const MPTableItemFirst = ({item}) => {
          <td>{numberWithSpace(item.payment)}</td>
       </tr>
       {
-         item.projects.map(project => <MPTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
+         showProjects && item.projects.map(project => <MPTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
       }
    </>;
 }

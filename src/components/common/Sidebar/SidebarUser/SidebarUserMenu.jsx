@@ -8,7 +8,7 @@ export const SidebarUserMenu = ({menuOpen, logoutUser}) => {
       <>
          {
             menuOpen && <div className={styles.sidebarUserMenu}>
-               <NavLink to='/profile' className={styles.sidebarUserMenuLink}
+             {/*  <NavLink to='/profile' className={styles.sidebarUserMenuLink}
                         activeClassName={styles.activeLink}>
                   <i className="icon-outline-person-24px-default"></i>
                   <span>Профиль</span>
@@ -22,7 +22,7 @@ export const SidebarUserMenu = ({menuOpen, logoutUser}) => {
                         activeClassName={styles.activeLink}>
                   <i className="icon-briefcasecustom"></i>
                   <span>Аккаунт</span>
-               </NavLink>
+               </NavLink>*/}
                <NavLink to='/' className={styles.sidebarUserMenuLink}
                         activeClassName={styles.activeLink} onClick={logoutUser}>
                   <i className="icon-open-in-new-default"></i>

@@ -23,8 +23,6 @@ const ProjectClientFilter = ({
                                 projectFilter
                                     }) => {
 
-   console.log(clients)
-
   const {register, handleSubmit, setValue, errors, reset} = useForm({
       defaultValues: {
          name: projectFilter?.name || [],

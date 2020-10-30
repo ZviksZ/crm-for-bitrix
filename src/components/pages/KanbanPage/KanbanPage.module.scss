@@ -1,0 +1,380 @@
+.dateInput {
+    border-radius: 4px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #C1C5C9;
+    margin-left: 15px;
+    background: #fff;
+    cursor: pointer;
+
+    &.dateInputActive {
+        border: 2px solid #3f51b5;
+    }
+
+    *:not(.dateIcon) {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        padding: 0;
+    }
+
+    .dateIcon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    @media screen and (min-width: 1000px) {
+        &:hover {
+            border: 1px solid #26A9CC;
+        }
+    }
+}
+.refreshBtn {
+    border-radius: 4px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #C1C5C9;
+    margin-left: 15px;
+    background: #fff;
+    cursor: pointer;
+    .refreshIcon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+        cursor: pointer;
+    }
+    @media screen and (min-width: 1000px) {
+        &:hover {
+            border: 1px solid #26A9CC;
+        }
+    }
+}
+.memberSelect {
+    min-width: 250px !important;
+    margin-right: 20px;
+    height: 56px !important;
+    background: #fff;
+
+    i {
+        display: inline-block;
+        margin-right: 14px;
+    }
+
+    .MuiOutlinedInput-root {
+        cursor: pointer !important;
+    }
+}
+.kanbanHeader {
+    display: flex;
+    align-items: center;
+}
+.kanbanBoard {
+    padding: 10px 14px 25px 0;
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+    .kanbanWrapper {
+        display: flex;
+        margin: 0 -16px;
+        height: 100%;
+    }
+    .column {
+        width: 272px;
+        min-width: 272px;
+        margin: 0 16px;
+        white-space: nowrap;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        .columnHeader {
+            position: relative;
+            height: 47px;
+            background-color: #fff;
+            padding: 12px;
+            margin: 25px 0 25px 0;
+            min-width: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            cursor: pointer;
+            &.weekday {
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    bottom: 0;
+                    width: 3px;
+                    background-color: #74D900;
+                }
+                &.overtime {
+                    &:before {
+                        background-color: #F14747;
+                    }
+                }
+            }
+            .day {
+                width: 50%;
+                line-height: 20px;
+                display: flex;
+                position: relative;
+                -webkit-box-pack: justify;
+                -webkit-justify-content: space-between;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                padding-left: 12px;
+            }
+            .time {
+                width: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .finish {
+                    position: relative;
+                    padding-left: 15px;
+                    font-weight: 700;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -5px;
+                        left: 0;
+                        width: 10px;
+                        height: 10px;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        -webkit-background-size: cover;
+                        background-size: cover;
+                        background-image: url(../../../assets/img/kanban/finish.svg);
+                    }
+                }
+                .start {
+                    position: relative;
+                    padding-left: 15px;
+                    font-weight: 700;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -5px;
+                        left: 0;
+                        width: 10px;
+                        height: 10px;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        -webkit-background-size: cover;
+                        background-size: cover;
+                        background-image: url(../../../assets/img/kanban/clock.svg);
+                    }
+                    &.overtime {
+                        color: #F14747;
+                    }
+                }
+            }
+        }
+        .columnItem {
+            margin-bottom: 25px;
+            padding: 12px 0;
+            background-color: #fff;
+            font-size: 13px;
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            cursor: pointer;
+            border-top: 2px solid #DEE4E7;
+            transition: .2s ease;
+            .photo {
+                width: 22px;
+                height: 22px;
+                display: flex;
+                border-radius: 50%;
+                background-size: cover;
+                flex-shrink: 0;
+                background-color: #000;
+            }
+            .columnItemHeader {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+                padding: 0 15px;
+                .headerInfo {
+                    margin-left: 6px;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    align-items: center;
+                    .deadline {
+                        display: flex;
+                        align-self: center;
+                        padding-left: 18px;
+                        line-height: 20px;
+                        color: #6B6B6B;
+                        background-image: url(../../../assets/img/kanban/deadline.svg);
+                        background-repeat: no-repeat;
+                        background-position: left center;
+                    }
+                    .time {
+                        display: flex;
+                        line-height: 20px;
+                        padding-left: 15px;
+                        font-size: 10px;
+                        align-self: center;
+                        position: relative;
+                        color: #6B6B6B;
+                        &:before {
+                            content: '';
+                            position: absolute;
+                            top: 50%;
+                            margin-top: -5px;
+                            width: 10px;
+                            height: 10px;
+                            left: 0;
+                            background-position: center center;
+                            background-repeat: no-repeat;
+                            -webkit-background-size: cover;
+                            background-size: cover;
+                            background-image: url(../../../assets/img/kanban/clock.svg);
+                        }
+                        &.finish {
+                            &:before {
+                                background-image: url(../../../assets/img/kanban/check.svg);
+                            }
+                        }
+                    }
+                }
+            }
+            .columnItemInfo {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 5px;
+                padding: 0 15px;
+                .project {
+                    font-size: 11px;
+                    line-height: 20px;
+                    margin-right: 10px;
+                    color: #6B6B6B;
+                    white-space: nowrap;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+                .sometime {
+                    font-size: 10px;
+                    line-height: 10px;
+                    background-color: #fff;
+                    padding: 3px 7px;
+                    flex-shrink: 0;
+                    border-radius: 15px;
+                    color: #5C6571;
+                    text-align: center;
+                    border: 1px solid #74D900;
+                    .time {
+
+                    }
+                }
+            }
+            .columnItemName {
+                color: #333;
+                padding: 0 15px;
+                font-weight: 600;
+                margin: 10px 0 0 0;
+                line-height: 20px;
+                white-space: initial;
+            }
+            .taskDelegate {
+                display: flex;
+                margin: 10px 0 0 0;
+                padding: 0 15px;
+                .to {
+                    padding-left: 20px;
+                    position: relative;
+                    &:before {
+                        content: '';
+                        position: absolute;
+                        display: block;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        -webkit-background-size: 8px 8px;
+                        background-size: 8px;
+                        width: 20px;
+                        height: 20px;
+                        top: 50%;
+                        left: 0;
+                        margin-top: -10px;
+                        background-image: url(../../../assets/img/kanban/to.svg);
+                    }
+                }
+            }
+            &.overtime {
+                .columnItemInfo {
+                    .sometime {
+                        border-color: #F14747;
+                    }
+                }
+            }
+            &.deferred {
+                .columnItemName {
+                    color: #A4A4A4;
+                }
+            }
+            &.nextDay {
+                &:before {
+                    content: '';
+                    position: absolute;
+                    top: 2px;
+                    right: 0;
+                    background-repeat-x: no-repeat;
+                    background-repeat-y: repeat;
+                    width: 4px;
+                    bottom: 0;
+                    background-image: url(../../../assets/img/kanban/triangle.svg);
+                }
+            }
+            &.prevDay {
+                &:after {
+                    content: '';
+                    position: absolute;
+                    top: 2px;
+                    left: 0;
+                    background-repeat-x: no-repeat;
+                    background-repeat-y: repeat;
+                    width: 4px;
+                    bottom: 0;
+                    background-image: url(../../../assets/img/kanban/triangle1.svg);
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 768px) {
+        flex-wrap: wrap;
+        margin: 0 0 25px;
+        padding-right: 0;
+        .column {
+            width: 100%;
+            .columnItem {
+                display: none;
+                &.columnItemShow {
+                    display: block;
+                }
+            }
+        }
+    }
+}

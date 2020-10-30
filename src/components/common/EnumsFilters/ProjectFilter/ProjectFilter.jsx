@@ -133,7 +133,7 @@ export const ProjectFilter = ({
       setStatus(null)
       setBudget([min, max])
 
-      projectEnumFilter({...projectFilter, page: 1, client: null, status: null, budgetMin: null, budgetMax: null})
+      projectEnumFilter({...projectFilter, page: 1, client: null, status: null, period: null, budgetMin: null, budgetMax: null})
       setShowFilter(false)
    };
 

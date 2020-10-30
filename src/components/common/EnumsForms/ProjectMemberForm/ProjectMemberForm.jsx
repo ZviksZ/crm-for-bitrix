@@ -121,7 +121,7 @@ const ProjectMemberForm = ({formData, closeProjectMemberForm, changeBudget, chan
                                 margin="normal" label="Комментарий" variant="outlined"/>
                   </Grid>
 
-                  <FormHistory history={formData.budgetHistory} membersEnum={membersEnum}/>
+                  {formData.budgetHistory.length > 0 && <FormHistory history={formData.budgetHistory} membersEnum={membersEnum}/>}
                </Grid>
                <Divider className={styles.divider}/>
                <Grid container direction="row"

@@ -27,7 +27,7 @@ export const PPTableItemFirst = ({item}) => {
          <td>{numberWithSpace(item.profitPercent)}</td>
       </tr>
       {
-         item.projects.map(project => <PPTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
+         showProjects && item.projects.map(project => <PPTableItemSecond isOpen={showProjects} item={project} key={project.id} />)
       }
    </>;
 }

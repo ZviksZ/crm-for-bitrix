@@ -1,8 +1,11 @@
-import * as axios                              from "axios";
-import {awardsData, membersData, projectsData} from "./mockUp.js";
+import * as axios from "axios";
+import {Cookie}   from "../helpers/cookie.js";
+import {kanban} from './kanban';
+
+const BASE_URL = 'https://margin.internetlab.ru/api'
 
 const instance = axios.create({
-   baseURL: 'https://margin.internetlab.ru/api',
+   baseURL: BASE_URL,
    headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
@@ -10,21 +13,19 @@ const instance = axios.create({
       'Content-Type': 'multipart/form-data'
    }
 })
-/*
 
 
 instance.interceptors.request.use(config => {
-   const data = JSON.parse(localStorage.getItem('userData')) || ''
-   const token = data.token
 
-   if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+   const cookies = Cookie.getCookie('userData');
+   const data = JSON.parse(cookies + '');
+
+   if (data && data.token) {
+      config.headers['X-AUTH-TOKEN'] = `${data.token}`
    }
 
    return config
 })
-*/
-
 
 
 export const enumsAPI = {
@@ -32,7 +33,7 @@ export const enumsAPI = {
     * Листинг групп клиентов
     */
    getGroupEnum(formData) {
-      return instance.post(`/getGroupEnum`,formData).then(response => response.data);
+      return instance.post(`/getGroupEnum`, formData).then(response => response.data);
    },
    /**
     * Клиент
@@ -73,7 +74,7 @@ export const enumsAPI = {
     * Запрос на справочник Счет зачисления
     */
    getCreditAccountEnum(formData) {
-      return instance.post(`/getCreditAccountEnum`,formData).then(response => response.data);
+      return instance.post(`/getCreditAccountEnum`, formData).then(response => response.data);
    },
    /**
     * Запрос на справочник Статусы счетов
@@ -208,8 +209,15 @@ export const authAPI = {
     * @param { Object } formData(login, password) - данные авторизации
     */
    login(formData) {
-      return instance.post(`/login`, formData).then(response => response.data);
-   }
+      return axios.post(`${BASE_URL}/login`, formData).then(response => response.data);
+   },
+   /**
+    * Справочник ACL, с данными, какие разделы отображать
+    */
+   getAcl() {
+      return instance.post(`/getAcl`).then(response => response.data);
+   },
+
 }
 
 
@@ -219,7 +227,7 @@ export const projectsAPI = {
     */
    getProjectsData(formData) {
       //return projectsData
-      return instance.post(`/reportProject`,formData).then(response => response.data);
+      return instance.post(`/reportProject`, formData).then(response => response.data);
    },
 }
 export const membersAPI = {
@@ -228,13 +236,24 @@ export const membersAPI = {
     */
    getMembersData(formData) {
       //return membersData
-      return instance.post(`/reportStaff`,formData).then(response => response.data);
+      return instance.post(`/reportStaff`, formData).then(response => response.data);
    },
    /**
     * Данные по премиям
     */
    getAwardsData(formData) {
       //return awardsData
-      return instance.post(`/reportAward`,formData).then(response => response.data);
+      return instance.post(`/reportAward`, formData).then(response => response.data);
+   },
+}
+
+
+export const kanbanAPI = {
+   /**
+    * Данные по сотрудникам, Канбан(проекты, время)
+    */
+   getKanbanData(formData) {
+      //return kanban
+      return instance.post(`/kanban`, formData).then(response => response.data);
    },
 }

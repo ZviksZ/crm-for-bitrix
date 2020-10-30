@@ -5,13 +5,16 @@ import {getGlobalError, setLoading} from "./appReducer.js";
 
 const SET_USER_DATA = 'marginlab/auth/SET_USER_DATA';
 const SET_AUTH = 'marginlab/auth/SET_AUTH';
+const SET_ACCESS = 'marginlab/auth/SET_ACCESS';
 
 let initialState = {
    token: '',
    userId: null,
    img: '',
    name: '',
-   isAuth: false
+   isAuth: false,
+   acl: null,
+   accessItems: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -26,12 +29,18 @@ const authReducer = (state = initialState, action) => {
             ...state,
             ...action.payload
          }
+      case SET_ACCESS:
+         return {
+            ...state,
+            accessItems: action.payload
+         }
       default:
          return state;
    }
 }
 export const setUserData = (payload) => ({type: SET_USER_DATA, payload})
 const setAuth = (isAuth) => ({type: SET_AUTH, isAuth})
+const setAccess = (payload) => ({type: SET_ACCESS, payload})
 
 /**
  * Вход в систему
@@ -42,21 +51,21 @@ export const login = (login, password) => async (dispatch) => {
    try {
       let response = await authAPI.login(formData)
 
-      await dispatch(setUserData(response))
-      dispatch(setLoading(false))
       if (response?.token) {
-         dispatch(setAuth(true))
+         await dispatch(setUserData(response))
          let jsonResponse = await JSON.stringify(response)
          await Cookie.setCookie('userData', jsonResponse, {expires: 2147483647});
+         let aclData = await authAPI.getAcl();
+         dispatch(setAccess(aclData))
+         dispatch(setAuth(true))
       } else {
+         dispatch(setLoading(false))
          dispatch(getGlobalError('Введенные данные неверны', 'error'))
       }
-
-      /*
-
-       */
    } catch (e) {
-      dispatch(getGlobalError('Бюджет не изменен', 'error'))
+      dispatch(setLoading(false))
+      dispatch(getGlobalError('Не удалось войти в систему', 'error'))
+
    }
 
 };
@@ -65,7 +74,7 @@ export const login = (login, password) => async (dispatch) => {
  */
 export const logoutUser = () => async (dispatch) => {
    dispatch(setAuth(false))
-   dispatch(setUserData({token: '',userId: '',name: '',img: ''}))
+   dispatch(setUserData({token: '', userId: '', name: '', img: ''}))
    Cookie.deleteCookie('userData');
 };
 /**
@@ -78,6 +87,8 @@ export const cookieUser = () => async (dispatch) => {
       if (data && data.token) {
          dispatch(setUserData(data))
          dispatch(setAuth(true))
+         let aclData = await authAPI.getAcl();
+         dispatch(setAccess(aclData))
       }
    } catch (e) {
 

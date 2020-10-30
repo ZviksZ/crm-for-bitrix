@@ -48,7 +48,7 @@
 .MuiSlider-root {
     color: #26A9CC !important;
 }
-.MuiList-root {
+.MuiList-root:not([aria-labelledby="member-label"]) {
     .MuiListSubheader-root {
         width: 100%;
         border-top: 1px solid #E2E5E8;
@@ -68,6 +68,11 @@
         color: #263238;
     }
 }
+.MuiList-root[aria-labelledby="member-label"] {
+   /* * {
+        background: #fff !important;
+    }*/
+}
 .MuiAutocomplete-root:not(.Mui-focused) {
     .MuiCircularProgress-root {
         display: none !important;
@@ -84,10 +89,6 @@
         color: #26A9CC;
     }
 }
-/*.MuiAutocomplete-listbox {
-    max-height: 250px;
-}*/
-/*.MuiAutocomplete-paper {
-    max-height: 200px;
-    overflow-y: scroll;
-}*/
+.MuiAutocomplete-listbox,.MuiAutocomplete-paper {
+    padding: 0 !important;
+}

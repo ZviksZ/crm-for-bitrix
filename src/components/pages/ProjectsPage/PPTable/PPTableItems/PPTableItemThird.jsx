@@ -5,7 +5,6 @@ import s                    from "../PPTable.module.scss";
 import cn                from "classnames";
 
 export const PPTableItemThird = ({item, projectStatuses, isOpen, isParentOpen}) => {
-
    return (
       <tr className={cn({[s.showTableRow]: isOpen && isParentOpen}, s.taskRow)}>
          <td className="open-link">

@@ -6,7 +6,6 @@ import {openProjectMemberForm}                                           from ".
 import {downloadAdditionalProjectPages, getGroupInfo, projectEnumFilter} from "../../../../redux/thunk/enumsThunks.js";
 import ProjectFilter                                                     from "../../../common/EnumsFilters/ProjectFilter/ProjectFilter.jsx";
 import {PeriodForm}                                                      from "../../../common/EnumsForms/PeriodForm/PeriodForm.jsx";
-import {Loader}                                                          from "../../../common/Loader/Loader.jsx";
 import {PaginationBlock}                                                 from "../../../common/PaginationBlock/PaginationBlock.jsx";
 import styles                                              from './ProjectTable.module.scss'
 import {ProjectTableItem}                                       from "./ProjectTableItem.jsx";
@@ -16,19 +15,19 @@ export const ProjectTable = (props) => {
       sortedData, sortField,
       sort, onSort, count,
       pages, setItemCount, currentPage, setCurrentPage
-   } = useSort(props.enum, 50, props.downloadAdditionalProjectPages, props.projectFilter)
-
+   } = useSort(props?.enum || [], props?.projectFilterPeriod?.pageCount || 50, props.downloadAdditionalProjectPages, props.projectFilter)
 
    const [showFilter, setShowFilter] = useState(false)
 
-   /*if (sortedData.length) {
-      return <Loader/>
-   }*/
 
    return (
       <>
             <div className={styles.filterBlock}>
-               <PeriodForm defPeriod={1} filter={props.projectFilter} setFilter={props.projectEnumFilter}/>
+               <PeriodForm defPeriod={1}
+                           filter={props.projectFilter}
+                           isProjectForm={true}
+                           projectFilterPeriod={props.projectFilterPeriod}
+                           setFilter={props.projectEnumFilter}/>
                <button className="btn btn-filter ml1 mb1" onClick={() => setShowFilter(true)}>
                   <span>Фильтр</span>
                   {props?.enum?.data?.length > 0 && <span className="count">{props?.enum?.size}</span>}
@@ -105,6 +104,7 @@ export const ProjectTable = (props) => {
                                       currentPage={currentPage}
                                       setCurrentPage={setCurrentPage}
                                       setItemCount={setItemCount}
+                                       projectFilterPeriod={props.projectFilterPeriod}
                                       withCount={true}/>
            </>}
 
@@ -120,6 +120,7 @@ let mapStateToProps = (state) => {
       projectStatuses: state.enum.projectStatuses,
       groupEnum: state.enum.enums.groupEnum,
       projectFilter: state.enum.projectFilter,
+      projectFilterPeriod: state.enum.projectFilterPeriod,
    }
 }
 

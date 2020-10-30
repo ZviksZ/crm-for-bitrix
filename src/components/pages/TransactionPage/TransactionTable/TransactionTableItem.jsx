@@ -1,8 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {formatDate, numberWithSpace}             from "../../../../helpers/utils.js";
-import styles                                    from './TransactionTable.module.scss'
+import React, {useCallback, useEffect, useState}      from 'react';
+import {formatDate, getRoutesChilds, numberWithSpace} from "../../../../helpers/utils.js";
+import styles                                         from './TransactionTable.module.scss'
 
-export const TransactionTableItem = ({item, openAddModalWithData, enums, updateContractorName}) => {
+export const TransactionTableItem = ({item, openAddModalWithData, enums, updateContractorName, accessItems}) => {
+
+   let isEditable = accessItems.includes(8);
 
    let amount = numberWithSpace(item.amount)
    let defValues = {
@@ -13,8 +15,8 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
       considerIdTitle: item.projectName || '',
       documentTitle: '',
       contractor: item.contractorName || ''
-
    }
+
    const [itemTitle, setItemTitle] = useState('')
 
    defValues.considerTitle = item.consider === 0 ? 'не учитывать' : item.consider === 1 ? 'везде' : item.consider === 2 ? 'в выбранном проекте' : ''
@@ -94,10 +96,17 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
       }
    }, [item, setItemTitle])
 
+
+   const openTransactionModal = () => {
+      if (isEditable) {
+         openAddModalWithData(typeString, 'updateTransaction', item, {...defValues, contractor: itemTitle})
+      }
+   }
+
    let date = formatDate(item.date);
    let typeString = '' + item.type;
    return (
-      <tr key={item.id} onClick={() => openAddModalWithData(typeString, 'updateTransaction', item, {...defValues, contractor: itemTitle})}>
+      <tr key={item.id} onClick={openTransactionModal}>
          <td>
             {date}
          </td>
@@ -120,7 +129,9 @@ export const TransactionTableItem = ({item, openAddModalWithData, enums, updateC
             {item.comment}
          </td>
          <td className="hoverText">
-            <span><i className="icon-baseline-edit-24px-default"></i> Изменить</span>
+            {
+               isEditable && <span><i className="icon-baseline-edit-24px-default"></i> Изменить</span>
+            }
          </td>
       </tr>
    );

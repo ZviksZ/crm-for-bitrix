@@ -30,6 +30,7 @@ const SET_TRANS_FILTER = 'marginlab/enums/SET_TRANS_FILTER';
 const SET_MY_CREDIT_ENUM = 'marginlab/enums/SET_MY_CREDIT_ENUM';
 const SET_PROJECTS_TO_FORM = 'marginlab/enums/SET_PROJECTS_TO_FORM';
 const SET_ALL_PROJECTS = 'marginlab/enums/SET_ALL_PROJECTS';
+const PROJECT_FILTER_PERIOD = 'marginlab/enums/PROJECT_FILTER_PERIOD';
 /* END--Constants */
 
 
@@ -71,6 +72,7 @@ let initialState = {
       finish: formatDate(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), true),
       page: 1
    },
+   projectFilterPeriod: null,
    creditAdditional: {
       statuses: [],
       currency: [],
@@ -324,6 +326,11 @@ const enumsReducer = (state = initialState, action) => {
             ...state,
             projectFilter: {...state.projectFilter, ...action.payload},
          }
+      case PROJECT_FILTER_PERIOD:
+         return {
+            ...state,
+            projectFilterPeriod: action.payload
+         }
       case UPDATE_TRANS_ENUM:
          return {
             ...state,
@@ -390,6 +397,7 @@ export const updateProjectEnum = (payload) => ({type: UPDATE_PROJECT_ENUM, paylo
 export const updateMembersEnum = (payload) => ({type: UPDATE_MEMBERS_ENUM, payload})
 export const additionalProjectPages = (payload) => ({type: ADDITIONAL_PROJECT_PAGES, payload})
 export const setProjectFilter = (payload) => ({type: SET_PROJECT_FILTER, payload})
+export const setProjectPeriodFilter = (payload) => ({type: PROJECT_FILTER_PERIOD, payload})
 export const updateTransEnum = (payload) => ({type: UPDATE_TRANS_ENUM, payload})
 export const additionalTransPages = (payload) => ({type: ADDITIONAL_TRANS_PAGES, payload})
 export const setTransFilter = (payload) => ({type: SET_TRANS_FILTER, payload})
